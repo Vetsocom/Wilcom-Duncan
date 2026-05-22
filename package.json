@@ -1,0 +1,48 @@
+{
+  "name": "wilcom-duncan-official",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "latest",
+    "@types/cookie": "^0.6.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/nodemailer": "^8.0.0",
+    "bcryptjs": "^3.0.3",
+    "class-variance-authority": "latest",
+    "cloudinary": "^2.10.0",
+    "clsx": "latest",
+    "cookie": "^1.1.1",
+    "framer-motion": "latest",
+    "jose": "^6.2.3",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "latest",
+    "mongoose": "^9.6.2",
+    "next": "latest",
+    "nodemailer": "^8.0.7",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwind-merge": "latest",
+    "tsx": "^4.22.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  }
+}

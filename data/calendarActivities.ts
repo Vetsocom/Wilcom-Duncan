@@ -1,0 +1,43 @@
+export type CalendarActivity = {
+  id: string;
+  title: string;
+  date: string; // ISO string format YYYY-MM-DD
+  time: string;
+  location: string;
+  type: string;
+  description: string;
+  applicationOpen: boolean;
+};
+
+export const calendarActivities: CalendarActivity[] = [
+  {
+    id: "1",
+    title: "CEOs Bootcamp 4.0",
+    date: "2026-11-06",
+    time: "09:00 AM - 04:00 PM",
+    location: "To Be Confirmed",
+    type: "Bootcamp",
+    description: "An upcoming executive education experience for C-Suite executives, entrepreneurs, and experienced business leaders.",
+    applicationOpen: true,
+  },
+  {
+    id: "2",
+    title: "Corporate Branding Workshop",
+    date: "2026-06-15",
+    time: "10:00 AM - 01:00 PM",
+    location: "Online",
+    type: "Workshop",
+    description: "A workshop on guiding businesses on how to communicate their identity, improve visibility, and build brands that earn trust.",
+    applicationOpen: true,
+  },
+  {
+    id: "3",
+    title: "Media Strategy Session",
+    date: "2026-06-25",
+    time: "02:00 PM - 05:00 PM",
+    location: "Monrovia",
+    type: "Training",
+    description: "Using media platforms, storytelling, interviews, and public visibility to support business leadership and brand authority.",
+    applicationOpen: false,
+  }
+];

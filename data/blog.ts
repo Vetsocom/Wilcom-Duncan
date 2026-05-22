@@ -1,0 +1,69 @@
+export type BlogPost = {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  date: string;
+  author: string;
+  excerpt: string;
+  image: string;
+  content: string;
+};
+
+export const blogPosts: BlogPost[] = [
+  {
+    id: "1",
+    slug: "how-ceos-can-build-businesses-that-deliver-real-value",
+    title: "How CEOs Can Build Businesses That Deliver Real Value",
+    category: "Business Growth",
+    date: "October 12, 2025",
+    author: "Wilcom Duncan",
+    excerpt: "A strong business is not only defined by profit. It is defined by the value it creates, the problem it solves, and the trust it builds with the people it serves.",
+    image: "/images/image.png",
+    content: "A strong business is not only defined by profit. It is defined by the value it creates, the problem it solves, and the trust it builds with the people it serves.\n\nBusiness growth requires clarity, discipline, communication, and the ability to create value consistently. When leaders focus purely on numbers without strengthening their core operations and customer trust, growth becomes unsustainable."
+  },
+  {
+    id: "2",
+    slug: "why-business-communication-is-a-leadership-skill",
+    title: "Why Business Communication Is a Leadership Skill",
+    category: "Communication",
+    date: "September 28, 2025",
+    author: "Wilcom Duncan",
+    excerpt: "Clear communication helps leaders align teams, inspire confidence, explain value, and move people toward a shared vision.",
+    image: "/images/bootcamp/ceos-bootcamp-community-collage.jpg",
+    content: "Clear communication helps leaders align teams, inspire confidence, explain value, and move people toward a shared vision.\n\nLeaders must master the art of conveying complex strategies simply. Whether talking to an investor, motivating an employee, or pitching to a client, how you communicate determines how your leadership is perceived."
+  },
+  {
+    id: "3",
+    slug: "the-role-of-branding-in-sme-growth",
+    title: "The Role of Branding in SME Growth",
+    category: "Branding",
+    date: "August 15, 2025",
+    author: "Wilcom Duncan",
+    excerpt: "Branding gives small and medium-sized businesses a stronger identity, clearer message, and better chance of earning trust in competitive markets.",
+    image: "/images/blog-3.jpg",
+    content: "Branding gives small and medium-sized businesses a stronger identity, clearer message, and better chance of earning trust in competitive markets.\n\nFor SMEs, branding is not just a logo; it is the promise you make to your customers. When an SME has a clear brand strategy, it becomes easier to charge premium prices and build customer loyalty."
+  },
+  {
+    id: "4",
+    slug: "what-entrepreneurs-should-learn-before-scaling",
+    title: "What Entrepreneurs Should Learn Before Scaling",
+    category: "Entrepreneurship",
+    date: "July 02, 2025",
+    author: "Wilcom Duncan",
+    excerpt: "Before scaling, entrepreneurs must understand their business model, customers, operations, team capacity, and growth discipline.",
+    image: "/images/ceos-bootcamp-speaker-spotlight.jpg",
+    content: "Before scaling, entrepreneurs must understand their business model, customers, operations, team capacity, and growth discipline.\n\nScaling prematurely is one of the biggest reasons businesses fail. You must validate your product-market fit, stabilize your revenue streams, and ensure your team can handle the pressure of growth before taking the leap."
+  },
+  {
+    id: "5",
+    slug: "inside-ceos-bootcamp-building-better-business-leaders",
+    title: "Inside CEOs Bootcamp: Building Better Business Leaders",
+    category: "CEOs Bootcamp",
+    date: "June 18, 2025",
+    author: "Wilcom Duncan",
+    excerpt: "CEOs Bootcamp creates a learning room for founders, entrepreneurs, executives, and decision-makers who want to lead and grow with more clarity.",
+    image: "/images/image.png",
+    content: "CEOs Bootcamp creates a learning room for founders, entrepreneurs, executives, and decision-makers who want to lead and grow with more clarity.\n\nThe bootcamp focuses on practical business education, strategic thinking, leadership discipline, communication, branding, and enterprise development. It gives participants a space to learn, connect, reflect, and build the mindset required to lead stronger organizations."
+  }
+];
