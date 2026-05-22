@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { blogPosts } from "@/data/blog";
 import { constructMetadata } from "@/lib/seo";
 import { CTASection } from "@/components/CTASection";
+import { getBlogPosts } from "@/lib/cms";
+import type { BlogPost } from "@/data/blog";
 import Image from "next/image";
 
 interface PageProps {
@@ -13,7 +14,8 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const posts = (await getBlogPosts()) as BlogPost[];
+  const post = posts.find((p) => p.slug === slug);
   if (!post) return constructMetadata({ title: "Not Found" });
   return constructMetadata({
     title: post.title,
@@ -21,15 +23,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export function generateStaticParams() {
-  return blogPosts.map((p) => ({
+export async function generateStaticParams() {
+  const posts = (await getBlogPosts()) as BlogPost[];
+  return posts.map((p) => ({
     slug: p.slug,
   }));
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const posts = (await getBlogPosts()) as BlogPost[];
+  const post = posts.find((p) => p.slug === slug);
   
   if (!post) {
     notFound();

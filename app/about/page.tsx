@@ -3,7 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ExpertiseCard } from "@/components/ExpertiseCard";
 import { CTASection } from "@/components/CTASection";
-import { profile } from "@/data/profile";
+import { getProfile } from "@/lib/cms";
 import { constructMetadata } from "@/lib/seo";
 import Image from "next/image";
 
@@ -11,7 +11,18 @@ export const metadata: Metadata = constructMetadata({
   title: "About Wilcom Duncan | Business Development Consultant",
 });
 
-export default function AboutPage() {
+type CmsProfile = {
+  bio: string;
+  expertiseAreas: { title: string; description: string }[];
+  platforms: string[];
+  speakingTopics: string[];
+  images?: Record<string, string>;
+};
+
+export default async function AboutPage() {
+  const profile = (await getProfile()) as CmsProfile;
+  const profileImages = profile.images || {};
+
   return (
     <div>
       <PageHero 
@@ -27,7 +38,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="aspect-4/5 max-w-md mx-auto rounded-4xl overflow-hidden border border-white/10 shadow-2xl relative z-10">
                 <Image
-                  src="/images/blog-2.jpg"
+                  src={profileImages.about || "/images/blog-2.jpg"}
                   alt="Wilcom Duncan Biography"
                   fill
                   className="object-cover"
@@ -41,13 +52,7 @@ export default function AboutPage() {
               <SectionHeader heading="Who Is Wilcom Duncan?" />
               <div className="prose prose-invert prose-lg max-w-none text-slate">
                 <p>
-                  Wilcom Duncan is a business development professional and public-facing entrepreneur whose work centers on SME growth, executive education, corporate branding, business communication, and media strategy.
-                </p>
-                <p>
-                  Through platforms connected to Reecom Media, CEOs Chat, CEOs Bootcamp, and leadership development initiatives, he continues to contribute to conversations and programs that help entrepreneurs, founders, and executives become more strategic, more visible, and more prepared for growth.
-                </p>
-                <p>
-                  Wilcom's approach is practical and business-focused. He believes that successful entrepreneurs need more than ideas. They need structure, leadership discipline, clear communication, strong branding, and a business model that delivers real value to the people they serve.
+                  {profile.bio}
                 </p>
               </div>
             </div>
@@ -129,16 +134,16 @@ export default function AboutPage() {
             
             <div className="grid grid-cols-2 gap-4">
                <div className="aspect-square rounded-4xl overflow-hidden border border-white/10 relative shadow-xl hover:scale-[1.02] transition-transform">
-                 <Image src="/images/bootcamp/ceos-bootcamp-hero-speaker.jpg" alt="Wilcom speaking" fill className="object-cover" />
+                 <Image src={profileImages.speaker || "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg"} alt="Wilcom speaking" fill className="object-cover" />
                </div>
                <div className="aspect-square rounded-4xl overflow-hidden border border-white/10 relative mt-8 shadow-xl hover:scale-[1.02] transition-transform">
-                 <Image src="/images/bootcamp/global-entrepreneur-week-session.jpg" alt="Wilcom speaking" fill className="object-cover" />
+                 <Image src={profileImages.hero || "/images/bootcamp/global-entrepreneur-week-session.jpg"} alt="Wilcom speaking" fill className="object-cover" />
                </div>
                <div className="aspect-square rounded-4xl overflow-hidden border border-white/10 relative -mt-8 shadow-xl hover:scale-[1.02] transition-transform">
-                 <Image src="/images/bootcamp/ceos-bootcamp-hero-speaker.jpg" alt="Conference Banner" fill className="object-cover" />
+                 <Image src={profileImages.author || "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg"} alt="Conference Banner" fill className="object-cover" />
                </div>
                <div className="aspect-square rounded-4xl overflow-hidden border border-white/10 relative shadow-xl hover:scale-[1.02] transition-transform">
-                 <Image src="/images/bootcamp/global-entrepreneur-week-session.jpg" alt="Global Entrepreneur Week" fill className="object-cover" />
+                 <Image src={profileImages.contact || "/images/bootcamp/global-entrepreneur-week-session.jpg"} alt="Global Entrepreneur Week" fill className="object-cover" />
                </div>
             </div>
           </div>

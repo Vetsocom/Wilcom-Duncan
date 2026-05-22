@@ -1,21 +1,25 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { projects } from "@/data/projects";
 import { constructMetadata } from "@/lib/seo";
 import { SectionHeader } from "@/components/SectionHeader";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { VideoEmbedGrid } from "@/components/VideoEmbedGrid";
 import { CTASection } from "@/components/CTASection";
+import { getProjects } from "@/lib/cms";
+import type { ProjectEvent } from "@/data/projects";
+import Image from "next/image";
 import { Calendar, MapPin } from "lucide-react";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const project = projects.find((p) => p.slug === params.slug);
+  const { slug } = await params;
+  const projects = (await getProjects()) as ProjectEvent[];
+  const project = projects.find((p) => p.slug === slug);
   if (!project) return constructMetadata({ title: "Not Found" });
   return constructMetadata({
     title: project.title,
@@ -25,13 +29,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 // Generate static params if building a static export, but we are using App Router normally.
 export function generateStaticParams() {
-  return projects.map((p) => ({
+  return getProjects().then((projects: ProjectEvent[]) => projects.map((p) => ({
     slug: p.slug,
-  }));
+  })));
 }
 
-export default function ProjectEventDetailPage({ params }: PageProps) {
-  const project = projects.find((p) => p.slug === params.slug);
+export default async function ProjectEventDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const projects = (await getProjects()) as ProjectEvent[];
+  const project = projects.find((p) => p.slug === slug);
   
   if (!project) {
     notFound();
@@ -77,8 +83,12 @@ export default function ProjectEventDetailPage({ params }: PageProps) {
       <section className="bg-midnight pb-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl -mt-10 relative z-20">
           <div className="aspect-[21/9] rounded-2xl overflow-hidden bg-charcoal border border-slate/10 flex items-center justify-center relative shadow-2xl">
+             {project.images?.[0] ? (
+               <Image src={project.images[0]} alt={project.title} fill className="object-cover" />
+             ) : (
+               <span className="text-slate/40 font-serif opacity-50">No hero image selected</span>
+             )}
              <div className="absolute inset-0 bg-gold/5 mix-blend-overlay" />
-             <span className="text-slate/40 font-serif opacity-50">[Hero Image: {project.images[0] || 'Placeholder'}]</span>
           </div>
         </div>
       </section>
@@ -118,11 +128,11 @@ export default function ProjectEventDetailPage({ params }: PageProps) {
       <section className="py-24 bg-charcoal border-y border-slate/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <SectionHeader heading="Event Gallery" />
-          <GalleryGrid images={['gallery-1.jpg', 'gallery-2.jpg', 'gallery-3.jpg', 'gallery-4.jpg']} />
+          <GalleryGrid images={project.images || []} />
           
           <div className="mt-16">
             <SectionHeader heading="Videos" />
-            <VideoEmbedGrid videos={['video-link-1', 'video-link-2']} />
+            <VideoEmbedGrid videos={project.videos || []} />
           </div>
         </div>
       </section>

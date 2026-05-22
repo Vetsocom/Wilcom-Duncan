@@ -8,19 +8,32 @@ import { BlogCard } from "@/components/BlogCard";
 import { CTASection } from "@/components/CTASection";
 import { Button } from "@/components/Button";
 import Link from "next/link";
-import { profile } from "@/data/profile";
-import { projects } from "@/data/projects";
-import { calendarActivities } from "@/data/calendarActivities";
-import { blogPosts } from "@/data/blog";
+import { getBlogPosts, getCalendarActivities, getProfile, getProjects } from "@/lib/cms";
+import type { ProjectEvent } from "@/data/projects";
+import type { CalendarActivity } from "@/data/calendarActivities";
+import type { BlogPost } from "@/data/blog";
 import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Wilcom Duncan | SME Development Consultant, Speaker & Media Executive",
 };
 
-export default function Home() {
+type CmsProfile = {
+  bio: string;
+  expertiseAreas: { title: string; description: string }[];
+  images?: Record<string, string>;
+};
+
+export default async function Home() {
+  const [profile, projects, calendarActivities, blogPosts] = await Promise.all([
+    getProfile() as Promise<CmsProfile>,
+    getProjects() as Promise<ProjectEvent[]>,
+    getCalendarActivities() as Promise<CalendarActivity[]>,
+    getBlogPosts() as Promise<BlogPost[]>,
+  ]);
   const featuredProjects = projects.slice(0, 3);
   const featuredBlogs = blogPosts.slice(0, 3);
+  const profileImages = profile.images || {};
 
   return (
     <div>
@@ -33,7 +46,7 @@ export default function Home() {
             <div className="order-2 lg:order-1 relative">
               <div className="aspect-4/5 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative z-10">
                 <Image
-                  src="/images/blog-3.jpg"
+                  src={profileImages.about || "/images/blog-3.jpg"}
                   alt="Wilcom Duncan portrait"
                   fill
                   className="object-cover"
@@ -46,7 +59,7 @@ export default function Home() {
                 heading="A Voice for Business Growth, Leadership, and Enterprise Development"
               />
               <p className="text-slate text-lg md:text-xl leading-relaxed mb-8">
-                Wilcom Duncan has built a public profile around helping business leaders and entrepreneurs improve how they think, communicate, brand, and grow. His work focuses on practical business development, SME support, leadership training, corporate communication, and media-driven brand visibility.
+                {profile.bio}
               </p>
               <Button asChild size="lg">
                 <Link href="/about">Learn More About Wilcom</Link>

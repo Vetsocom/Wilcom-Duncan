@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { bootcamps } from "@/data/bootcamps";
 import { constructMetadata } from "@/lib/seo";
 import { SectionHeader } from "@/components/SectionHeader";
 import { CTASection } from "@/components/CTASection";
 import { GalleryGrid } from "@/components/GalleryGrid";
+import { getBootcamps } from "@/lib/cms";
+import type { Bootcamp } from "@/data/bootcamps";
+import Image from "next/image";
 import { Calendar, MapPin } from "lucide-react";
 
 interface PageProps {
@@ -15,6 +17,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const bootcamps = (await getBootcamps()) as Bootcamp[];
   const bootcamp = bootcamps.find((b) => b.slug === slug && b.published);
   if (!bootcamp) return constructMetadata({ title: "Not Found" });
   return constructMetadata({
@@ -23,7 +26,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const bootcamps = (await getBootcamps()) as Bootcamp[];
   return bootcamps.filter((b) => b.slug && b.published).map((b) => ({
     slug: b.slug,
   }));
@@ -31,6 +35,7 @@ export function generateStaticParams() {
 
 export default async function BootcampDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  const bootcamps = (await getBootcamps()) as Bootcamp[];
   const bootcamp = bootcamps.find((b) => b.slug === slug && b.published);
   
   if (!bootcamp) {
@@ -72,8 +77,12 @@ export default async function BootcampDetailPage({ params }: PageProps) {
       <section className="bg-midnight pb-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl -mt-10 relative z-20">
           <div className="aspect-[21/9] rounded-2xl overflow-hidden bg-charcoal border border-slate/10 flex items-center justify-center relative shadow-2xl">
+             {bootcamp.images?.[0] ? (
+               <Image src={bootcamp.images[0]} alt={bootcamp.title} fill className="object-cover" />
+             ) : (
+               <span className="text-slate/40 font-serif opacity-50">No hero image selected</span>
+             )}
              <div className="absolute inset-0 bg-gold/5 mix-blend-overlay" />
-             <span className="text-slate/40 font-serif opacity-50">[Hero Image: {bootcamp.images?.[0] || 'Placeholder'}]</span>
           </div>
         </div>
       </section>

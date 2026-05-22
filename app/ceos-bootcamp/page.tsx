@@ -4,7 +4,8 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { BootcampCard } from "@/components/BootcampCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { CTASection } from "@/components/CTASection";
-import { bootcamps } from "@/data/bootcamps";
+import { getBootcamps } from "@/lib/cms";
+import type { Bootcamp } from "@/data/bootcamps";
 import { constructMetadata } from "@/lib/seo";
 import Image from "next/image";
 
@@ -12,7 +13,8 @@ export const metadata: Metadata = constructMetadata({
   title: "CEOs Bootcamp | Executive Business Leadership Platform",
 });
 
-export default function CEOsBootcampPage() {
+export default async function CEOsBootcampPage() {
+  const bootcamps = (await getBootcamps()) as Bootcamp[];
   const publishedBootcamps = bootcamps.filter((b) => b.slug && b.published);
   const pastBootcamps = publishedBootcamps.filter(b => b.status === "past");
   const upcomingBootcamp = publishedBootcamps.find(b => b.status === "upcoming");
