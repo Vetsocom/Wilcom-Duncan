@@ -132,15 +132,7 @@ export async function POST(request: Request) {
 
     const { website, ...data } = parsed.data;
     const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL;
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
-    if (!receiverEmail) {
-      throw new Error("Missing environment variable: CONTACT_RECEIVER_EMAIL");
-    }
-
-    if (!siteUrl) {
-      throw new Error("Missing environment variable: NEXT_PUBLIC_SITE_URL");
-    }
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
 
     const rateLimitResponse = checkContactRateLimit(request);
     if (rateLimitResponse) {
@@ -163,27 +155,29 @@ export async function POST(request: Request) {
 
     let adminEmailSent = false;
 
-    try {
-      await sendMail({
-        to: receiverEmail,
-        subject: `New Website Inquiry from ${data.fullName}`,
-        replyTo: data.email,
-        html: `
-          <h2>New Website Inquiry</h2>
-          <p><strong>Full name:</strong> ${escapeHtml(data.fullName)}</p>
-          <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-          <p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
-          <p><strong>Organization:</strong> ${escapeHtml(data.organization)}</p>
-          <p><strong>Inquiry type:</strong> ${escapeHtml(data.inquiryType)}</p>
-          <p><strong>Message:</strong></p>
-          <p>${escapeHtml(data.message).replaceAll("\n", "<br />")}</p>
-          <p><strong>Submitted date:</strong> ${escapeHtml(submittedDate)}</p>
-          <p><strong>Website:</strong> ${escapeHtml(siteUrl)}</p>
-        `,
-      });
-      adminEmailSent = true;
-    } catch (error) {
-      console.error("CONTACT_EMAIL_ERROR:", error);
+    if (receiverEmail) {
+      try {
+        await sendMail({
+          to: receiverEmail,
+          subject: `New Website Inquiry from ${data.fullName}`,
+          replyTo: data.email,
+          html: `
+            <h2>New Website Inquiry</h2>
+            <p><strong>Full name:</strong> ${escapeHtml(data.fullName)}</p>
+            <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+            <p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>
+            <p><strong>Organization:</strong> ${escapeHtml(data.organization)}</p>
+            <p><strong>Inquiry type:</strong> ${escapeHtml(data.inquiryType)}</p>
+            <p><strong>Message:</strong></p>
+            <p>${escapeHtml(data.message).replaceAll("\n", "<br />")}</p>
+            <p><strong>Submitted date:</strong> ${escapeHtml(submittedDate)}</p>
+            <p><strong>Website:</strong> ${escapeHtml(siteUrl || "Not configured")}</p>
+          `,
+        });
+        adminEmailSent = true;
+      } catch (error) {
+        console.error("CONTACT_EMAIL_ERROR:", error);
+      }
     }
 
     if (adminEmailSent) {

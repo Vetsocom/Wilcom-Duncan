@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "./Button";
 
-type ApplicationSource = "calendar" | "bootcamp" | "event" | "general";
+type ApplicationSource = "calendar" | "bootcamp" | "event" | "project-event" | "general";
 
 type Feedback = {
   type: "success" | "error";
@@ -36,7 +36,6 @@ export function ApplicationFormModal({
   onClose,
   activityTitle,
   activityId,
-  activityType,
   source = "general",
 }: ApplicationFormModalProps) {
   const [formData, setFormData] = useState(baseForm);
@@ -62,15 +61,18 @@ export function ApplicationFormModal({
     setFeedback(null);
 
     try {
-      const response = await fetch("/api/applications", {
+      const registrationSource = source === "event" ? "project-event" : source;
+      const response = await fetch("/api/registrations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
+          whatsapp: formData.phone,
+          bootcampTitle: registrationSource === "bootcamp" ? activityTitle : undefined,
+          bootcampSlug: registrationSource === "bootcamp" ? activityId : undefined,
           activityTitle,
           activityId,
-          activityType,
-          source,
+          source: registrationSource,
         }),
       });
 
@@ -82,7 +84,7 @@ export function ApplicationFormModal({
 
       setFeedback({
         type: "success",
-        message: "Application received. Our team will contact you with next steps.",
+        message: result.message || "Registration received. Our team will contact you with next steps.",
       });
       setFormData(baseForm);
     } catch (error) {

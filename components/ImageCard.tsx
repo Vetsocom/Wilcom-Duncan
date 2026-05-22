@@ -24,7 +24,8 @@ export function ImageCard({
   sizes = "(min-width: 1024px) 50vw, 100vw",
 }: ImageCardProps) {
   const [failed, setFailed] = useState(!src);
-  const imageSrc = src && src.startsWith("/") ? src : src ? `/images/${src}` : undefined;
+  const isRemote = Boolean(src?.startsWith("http://") || src?.startsWith("https://"));
+  const imageSrc = src && (src.startsWith("/") || isRemote) ? src : src ? `/images/${src}` : undefined;
 
   return (
     <div

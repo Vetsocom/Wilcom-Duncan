@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Save, Loader2, CheckCircle } from 'lucide-react';
+import ImagePicker from '@/components/admin/ImagePicker';
 
 const inputCls = "w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#d4af37] transition-colors";
 const cardCls = "bg-[#111] border border-white/5 rounded-xl p-6 space-y-4";
@@ -28,6 +29,7 @@ export default function AdminProfilePage() {
   if (!profile) return <div className="text-red-400">Failed to load profile.</div>;
 
   const update = (key: string, val: any) => setProfile({ ...profile, [key]: val });
+  const updateImage = (key: string, val: string) => setProfile({ ...profile, images: { ...(profile.images || {}), [key]: val } });
 
   return (
     <div className="space-y-8 max-w-4xl">
@@ -47,6 +49,16 @@ export default function AdminProfilePage() {
         <div><label className="block text-sm text-gray-300 mb-2">Full Name</label><input type="text" value={profile.name||''} onChange={e => update('name', e.target.value)} className={inputCls} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Location</label><input type="text" value={profile.location||''} onChange={e => update('location', e.target.value)} className={inputCls} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Bio</label><textarea rows={5} value={profile.bio||''} onChange={e => update('bio', e.target.value)} className={inputCls + " resize-y"} /></div>
+      </div>
+
+      <div className={cardCls}>
+        <h2 className="text-lg font-semibold text-white">Website Images</h2>
+        <p className="text-sm text-gray-500">Choose or upload images visually. No file paths needed.</p>
+        <ImagePicker label="Hero image" value={profile.images?.hero||''} onChange={value => updateImage('hero', value)} folder="profile" />
+        <ImagePicker label="About image" value={profile.images?.about||''} onChange={value => updateImage('about', value)} folder="profile" />
+        <ImagePicker label="Speaker profile image" value={profile.images?.speaker||''} onChange={value => updateImage('speaker', value)} folder="profile" />
+        <ImagePicker label="Author image" value={profile.images?.author||''} onChange={value => updateImage('author', value)} folder="profile" />
+        <ImagePicker label="Contact image" value={profile.images?.contact||''} onChange={value => updateImage('contact', value)} folder="profile" />
       </div>
 
       <div className={cardCls}>

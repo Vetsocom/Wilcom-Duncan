@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, Loader2, Save, ArrowLeft, CheckCircle } from 'lucide-react';
+import ImagePicker from '@/components/admin/ImagePicker';
 
 const inputCls = "w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#d4af37] transition-colors";
 const btnPrimary = "flex items-center gap-2 bg-[#d4af37] text-black font-semibold rounded-lg px-5 py-2.5 hover:bg-[#e5c158] transition-colors disabled:opacity-50";
 
-const emptyActivity = { title:'', date:'', time:'', location:'', type:'training', description:'', link:'' };
+const emptyActivity = { title:'', date:'', time:'', location:'', type:'training', description:'', link:'', image:'' };
 
 export default function AdminCalendarPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -58,6 +59,7 @@ export default function AdminCalendarPage() {
           </div>
           <div><label className="block text-sm text-gray-300 mb-2">Link</label><input value={editing.link||''} onChange={e=>setEditing({...editing,link:e.target.value})} className={inputCls} placeholder="Optional URL" /></div>
         </div>
+        <ImagePicker label="Optional activity image" value={editing.image||''} onChange={value=>setEditing({...editing,image:value})} folder="general" />
         <div><label className="block text-sm text-gray-300 mb-2">Description</label><textarea rows={3} value={editing.description||''} onChange={e=>setEditing({...editing,description:e.target.value})} className={inputCls+" resize-y"} /></div>
       </div>
     </div>

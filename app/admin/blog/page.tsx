@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, Loader2, Save, ArrowLeft, CheckCircle } from 'lucide-react';
+import ImagePicker from '@/components/admin/ImagePicker';
 
 const inputCls = "w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#d4af37] transition-colors";
 const btnPrimary = "flex items-center gap-2 bg-[#d4af37] text-black font-semibold rounded-lg px-5 py-2.5 hover:bg-[#e5c158] transition-colors disabled:opacity-50";
@@ -48,12 +49,12 @@ export default function AdminBlogPage() {
       <div className="bg-[#111] border border-white/5 rounded-xl p-6 space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><label className="block text-sm text-gray-300 mb-2">Title</label><input value={editing.title||''} onChange={e=>setEditing({...editing,title:e.target.value})} className={inputCls} /></div>
-          <div><label className="block text-sm text-gray-300 mb-2">Slug</label><input value={editing.slug||''} onChange={e=>setEditing({...editing,slug:e.target.value})} className={inputCls} /></div>
+          <div><label className="block text-sm text-gray-300 mb-2">Page URL Slug</label><input value={editing.slug||''} onChange={e=>setEditing({...editing,slug:e.target.value})} className={inputCls} /></div>
           <div><label className="block text-sm text-gray-300 mb-2">Category</label><input value={editing.category||''} onChange={e=>setEditing({...editing,category:e.target.value})} className={inputCls} /></div>
           <div><label className="block text-sm text-gray-300 mb-2">Date</label><input value={editing.date||''} onChange={e=>setEditing({...editing,date:e.target.value})} className={inputCls} /></div>
           <div><label className="block text-sm text-gray-300 mb-2">Author</label><input value={editing.author||''} onChange={e=>setEditing({...editing,author:e.target.value})} className={inputCls} /></div>
-          <div><label className="block text-sm text-gray-300 mb-2">Image Path</label><input value={editing.image||''} onChange={e=>setEditing({...editing,image:e.target.value})} className={inputCls} /></div>
         </div>
+        <ImagePicker label="Choose or upload a featured image" value={editing.image||''} onChange={value=>setEditing({...editing,image:value})} folder="blog" />
         <div><label className="block text-sm text-gray-300 mb-2">Excerpt</label><textarea rows={2} value={editing.excerpt||''} onChange={e=>setEditing({...editing,excerpt:e.target.value})} className={inputCls+" resize-y"} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Content</label><textarea rows={10} value={editing.content||''} onChange={e=>setEditing({...editing,content:e.target.value})} className={inputCls+" resize-y font-mono text-sm"} /></div>
       </div>

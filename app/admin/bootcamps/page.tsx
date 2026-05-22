@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, Loader2, Save, ArrowLeft, CheckCircle } from 'lucide-react';
+import MultiImagePicker from '@/components/admin/MultiImagePicker';
 
 const inputCls = "w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#d4af37] transition-colors";
 const btnPrimary = "flex items-center gap-2 bg-[#d4af37] text-black font-semibold rounded-lg px-5 py-2.5 hover:bg-[#e5c158] transition-colors disabled:opacity-50";
@@ -48,7 +49,7 @@ export default function AdminBootcampsPage() {
       <div className="bg-[#111] border border-white/5 rounded-xl p-6 space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><label className="block text-sm text-gray-300 mb-2">Title</label><input value={editing.title||''} onChange={e=>setEditing({...editing,title:e.target.value})} className={inputCls} /></div>
-          <div><label className="block text-sm text-gray-300 mb-2">Slug</label><input value={editing.slug||''} onChange={e=>setEditing({...editing,slug:e.target.value})} className={inputCls} /></div>
+          <div><label className="block text-sm text-gray-300 mb-2">Page URL Slug</label><input value={editing.slug||''} onChange={e=>setEditing({...editing,slug:e.target.value})} className={inputCls} /></div>
           <div><label className="block text-sm text-gray-300 mb-2">Date</label><input value={editing.date||''} onChange={e=>setEditing({...editing,date:e.target.value})} className={inputCls} /></div>
           <div><label className="block text-sm text-gray-300 mb-2">Location</label><input value={editing.location||''} onChange={e=>setEditing({...editing,location:e.target.value})} className={inputCls} /></div>
           <div><label className="block text-sm text-gray-300 mb-2">Theme</label><input value={editing.theme||''} onChange={e=>setEditing({...editing,theme:e.target.value})} className={inputCls} /></div>
@@ -61,7 +62,7 @@ export default function AdminBootcampsPage() {
         <div><label className="block text-sm text-gray-300 mb-2">Overview</label><textarea rows={4} value={editing.overview||''} onChange={e=>setEditing({...editing,overview:e.target.value})} className={inputCls+" resize-y"} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Objectives (one per line)</label><textarea rows={3} value={(editing.objectives||[]).join('\n')} onChange={e=>setEditing({...editing,objectives:e.target.value.split('\n').filter((t:string)=>t.trim())})} className={inputCls+" resize-y font-mono text-sm"} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Topics (one per line)</label><textarea rows={3} value={(editing.topics||[]).join('\n')} onChange={e=>setEditing({...editing,topics:e.target.value.split('\n').filter((t:string)=>t.trim())})} className={inputCls+" resize-y font-mono text-sm"} /></div>
-        <div><label className="block text-sm text-gray-300 mb-2">Images (one path per line)</label><textarea rows={3} value={(editing.images||[]).join('\n')} onChange={e=>setEditing({...editing,images:e.target.value.split('\n').filter((t:string)=>t.trim())})} className={inputCls+" resize-y font-mono text-sm"} /></div>
+        <MultiImagePicker label="Choose or upload bootcamp images" value={editing.images||[]} onChange={images=>setEditing({...editing,images})} folder="bootcamps" />
         <div><label className="block text-sm text-gray-300 mb-2">Testimonials (one per line)</label><textarea rows={3} value={(editing.testimonials||[]).join('\n')} onChange={e=>setEditing({...editing,testimonials:e.target.value.split('\n').filter((t:string)=>t.trim())})} className={inputCls+" resize-y font-mono text-sm"} /></div>
       </div>
     </div>
