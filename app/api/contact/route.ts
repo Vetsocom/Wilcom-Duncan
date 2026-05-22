@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { sendMail } from "@/lib/mail";
+import { createNotification } from "@/lib/notifications";
 import { contactSchema } from "@/lib/validations/contact";
 import { ContactInquiry } from "@/models/ContactInquiry";
 
@@ -148,7 +149,17 @@ export async function POST(request: Request) {
 
     await connectDB();
     const inquiry = await ContactInquiry.create(data);
+    const inquiryId = inquiry._id.toString();
     const submittedDate = new Date(inquiry.createdAt).toLocaleString();
+
+    await createNotification({
+      title: "New contact inquiry",
+      message: `${data.fullName} sent a message about ${data.inquiryType}.`,
+      type: "contact",
+      priority: "high",
+      link: `/admin/inquiries?id=${inquiryId}`,
+      relatedId: inquiryId,
+    });
 
     let adminEmailSent = false;
 
@@ -197,14 +208,14 @@ export async function POST(request: Request) {
         {
           success: true,
           message: "Your message was saved, but email notification could not be sent.",
-          data: { id: inquiry._id.toString() },
+          data: { id: inquiryId },
         },
         { status: 202 }
       );
     }
 
     return NextResponse.json(
-      { success: true, message: successMessage, data: { id: inquiry._id.toString() } },
+      { success: true, message: successMessage, data: { id: inquiryId } },
       { status: 201 }
     );
   } catch (error) {

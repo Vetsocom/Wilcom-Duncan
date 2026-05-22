@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getProjects, saveProjects } from '@/lib/cms';
+import { createNotification } from '@/lib/notifications';
 
 export async function GET() {
   try {
@@ -17,6 +18,14 @@ export async function POST(request: Request) {
     newProject.id = `p${Date.now()}`;
     projects.push(newProject);
     await saveProjects(projects);
+    await createNotification({
+      title: 'Project created',
+      message: `${newProject.title || 'A new project'} was added to the website.`,
+      type: 'content',
+      priority: 'normal',
+      link: '/admin/projects',
+      relatedId: newProject.id,
+    });
     return NextResponse.json(newProject, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });

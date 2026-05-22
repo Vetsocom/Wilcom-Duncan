@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getBlogPosts, saveBlogPosts } from '@/lib/cms';
+import { createNotification } from '@/lib/notifications';
 
 export async function GET() {
   try {
@@ -17,6 +18,14 @@ export async function POST(request: Request) {
     newPost.id = `blog${Date.now()}`;
     posts.push(newPost);
     await saveBlogPosts(posts);
+    await createNotification({
+      title: 'Blog post created',
+      message: `${newPost.title || 'A new post'} was added to the website.`,
+      type: 'content',
+      priority: 'normal',
+      link: '/admin/blog',
+      relatedId: newPost.id,
+    });
     return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create blog post' }, { status: 500 });
