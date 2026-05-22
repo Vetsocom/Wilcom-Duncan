@@ -6,6 +6,25 @@ import { ContactInquiry } from "@/models/ContactInquiry";
 
 const successMessage = "Thank you for reaching out. Your message has been received.";
 const fallbackErrorMessage = "Unable to send message right now. Please try again.";
+const contactRateLimitWindowMs = Number(process.env.CONTACT_RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000);
+const contactRateLimitMaxRequests = Number(process.env.CONTACT_RATE_LIMIT_MAX_REQUESTS || 5);
+const contactRateLimitMaxKeys = 10000;
+
+type RateLimitEntry = {
+  count: number;
+  resetAt: number;
+};
+
+declare global {
+  // eslint-disable-next-line no-var
+  var contactRateLimitStore: Map<string, RateLimitEntry> | undefined;
+}
+
+const contactRateLimitStore = global.contactRateLimitStore ?? new Map<string, RateLimitEntry>();
+
+if (!global.contactRateLimitStore) {
+  global.contactRateLimitStore = contactRateLimitStore;
+}
 
 function escapeHtml(value?: string) {
   return (value || "Not provided")
@@ -14,6 +33,68 @@ function escapeHtml(value?: string) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function getClientIdentifier(request: Request) {
+  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return (
+    forwardedFor ||
+    request.headers.get("cf-connecting-ip") ||
+    request.headers.get("x-real-ip") ||
+    "unknown"
+  ).toLowerCase();
+}
+
+function cleanupRateLimitStore(now: number) {
+  if (contactRateLimitStore.size <= contactRateLimitMaxKeys) {
+    return;
+  }
+
+  for (const [key, entry] of contactRateLimitStore) {
+    if (entry.resetAt <= now) {
+      contactRateLimitStore.delete(key);
+    }
+  }
+
+  while (contactRateLimitStore.size > contactRateLimitMaxKeys) {
+    const oldestKey = contactRateLimitStore.keys().next().value;
+
+    if (!oldestKey) {
+      return;
+    }
+
+    contactRateLimitStore.delete(oldestKey);
+  }
+}
+
+function checkContactRateLimit(request: Request) {
+  if (process.env.NODE_ENV !== "production") {
+    return null;
+  }
+
+  const now = Date.now();
+  const key = getClientIdentifier(request);
+  const current = contactRateLimitStore.get(key);
+
+  cleanupRateLimitStore(now);
+
+  if (!current || current.resetAt <= now) {
+    contactRateLimitStore.set(key, { count: 1, resetAt: now + contactRateLimitWindowMs });
+    return null;
+  }
+
+  if (current.count >= contactRateLimitMaxRequests) {
+    return NextResponse.json(
+      { success: false, error: "Too many submissions. Please try again later." },
+      {
+        status: 429,
+        headers: { "Retry-After": Math.ceil((current.resetAt - now) / 1000).toString() },
+      }
+    );
+  }
+
+  current.count += 1;
+  return null;
 }
 
 export async function POST(request: Request) {
@@ -60,7 +141,11 @@ export async function POST(request: Request) {
       throw new Error("Missing environment variable: NEXT_PUBLIC_SITE_URL");
     }
 
-    // TODO: Add production rate limiting for this public endpoint.
+    const rateLimitResponse = checkContactRateLimit(request);
+    if (rateLimitResponse) {
+      return rateLimitResponse;
+    }
+
     await connectDB();
     const inquiry = await ContactInquiry.create(data);
     const submittedDate = new Date(inquiry.createdAt).toLocaleString();
