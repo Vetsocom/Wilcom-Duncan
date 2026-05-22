@@ -1,6 +1,6 @@
-import { Schema, models, model, type InferSchemaType } from "mongoose";
+import mongoose, { Schema, models, model, type InferSchemaType } from "mongoose";
 
-const contactInquirySchema = new Schema(
+const ContactInquirySchema = new Schema(
   {
     fullName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
@@ -22,7 +22,10 @@ const contactInquirySchema = new Schema(
   { timestamps: true }
 );
 
-export type ContactInquiryDocument = InferSchemaType<typeof contactInquirySchema>;
+export type ContactInquiryDocument = InferSchemaType<typeof ContactInquirySchema>;
 
-export const ContactInquiry =
-  models.ContactInquiry || model("ContactInquiry", contactInquirySchema);
+const ContactInquiry =
+  models.ContactInquiry || model("ContactInquiry", ContactInquirySchema);
+
+export { ContactInquiry };
+export default ContactInquiry;

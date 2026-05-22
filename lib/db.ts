@@ -29,7 +29,7 @@ export async function connectDB() {
   const uri = process.env.MONGODB_URI;
 
   if (!uri) {
-    throw new Error("MONGODB_URI is missing. Add it to your server environment.");
+    throw new Error("Missing environment variable: MONGODB_URI");
   }
 
   if (!cached.promise) {

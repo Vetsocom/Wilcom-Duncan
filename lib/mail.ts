@@ -1,6 +1,7 @@
 import "server-only";
 
 import nodemailer from "nodemailer";
+import type SMTPTransport from "nodemailer/lib/smtp-transport";
 
 type SendMailInput = {
   to: string;
@@ -11,12 +12,16 @@ type SendMailInput = {
 
 function getSmtpConfig() {
   const { SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS } = process.env;
+  const requiredEnv = { SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS };
 
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_SECURE || !SMTP_USER || !SMTP_PASS) {
-    throw new Error("SMTP configuration is incomplete. Check SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, and SMTP_PASS.");
+  for (const [name, value] of Object.entries(requiredEnv)) {
+    if (!value) {
+      throw new Error(`Missing environment variable: ${name}`);
+    }
   }
 
-  const port = Number(SMTP_PORT);
+  const port = Number(SMTP_PORT || 465);
+  const secure = SMTP_SECURE === "true";
 
   if (Number.isNaN(port)) {
     throw new Error("SMTP_PORT must be a valid number.");
@@ -25,23 +30,32 @@ function getSmtpConfig() {
   return {
     host: SMTP_HOST,
     port,
-    secure: SMTP_SECURE === "true",
+    secure,
     auth: {
       user: SMTP_USER,
       pass: SMTP_PASS,
     },
-  };
+  } satisfies SMTPTransport.Options;
 }
 
 export async function sendMail({ to, subject, html, replyTo }: SendMailInput) {
   const config = getSmtpConfig();
   const transporter = nodemailer.createTransport(config);
 
-  return transporter.sendMail({
-    from: `"Wilcom Duncan" <${config.auth.user}>`,
-    to,
-    subject,
-    html,
-    replyTo,
-  });
+  try {
+    if (process.env.NODE_ENV === "development") {
+      await transporter.verify();
+    }
+
+    return await transporter.sendMail({
+      from: `"Wilcom Duncan" <${config.auth?.user}>`,
+      to,
+      subject,
+      html,
+      replyTo,
+    });
+  } catch (error) {
+    console.error("CONTACT_EMAIL_ERROR:", error);
+    throw error;
+  }
 }

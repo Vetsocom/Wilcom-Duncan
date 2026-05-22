@@ -45,18 +45,25 @@ export function ContactForm() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(result.error || "Something went wrong. Please try again.");
+        throw new Error(result.error || "Unable to send message right now. Please try again.");
       }
 
       setFeedback({
         type: "success",
-        message: "Thank you. Your message has been received.",
+        message: result.message || "Thank you. Your message has been received.",
       });
       setFormData(initialForm);
     } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("CONTACT_FORM_ERROR:", error);
+      }
+
       setFeedback({
         type: "error",
-        message: error instanceof Error ? error.message : "Something went wrong. Please try again.",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unable to send message right now. Please try again.",
       });
     } finally {
       setIsSubmitting(false);
