@@ -3,7 +3,11 @@ import { Button } from "./Button";
 import { ImageCard } from "./ImageCard";
 import { MotionWrapper } from "./MotionWrapper";
 
-export function HeroEditorial() {
+type HeroEditorialProps = {
+  imageSrc?: string;
+};
+
+export function HeroEditorial({ imageSrc }: HeroEditorialProps) {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute right-[-18rem] top-24 h-[42rem] w-[42rem] rounded-full bg-gold/10 blur-[140px]" />
@@ -44,7 +48,7 @@ export function HeroEditorial() {
         <MotionWrapper delay={0.3} className="relative mx-auto w-full max-w-[34rem] lg:mr-0">
           <div className="absolute -inset-4 rounded-[2.25rem] border border-gold/25" />
           <ImageCard
-            src="/images/blog-1.jpg"
+            src={imageSrc || "/images/blog-1.jpg"}
             alt="Wilcom Duncan speaking at a business leadership event"
             priority
             className="aspect-4/5 rounded-4xl"

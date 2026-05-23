@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { Button } from "./Button";
 import { ApplicationFormModal } from "./ApplicationFormModal";
+import { SafeImage } from "./SafeImage";
 
 type ApplicationSource = "calendar" | "bootcamp" | "event" | "general";
 
@@ -72,7 +72,7 @@ export function CTASection({
             {imageSrc && (
               <div className="relative order-first lg:order-last">
                 <div className="aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative z-10">
-                  <Image
+                  <SafeImage
                     src={imageSrc}
                     alt={heading}
                     fill

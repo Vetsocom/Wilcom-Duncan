@@ -7,7 +7,7 @@ import { VideoEmbedGrid } from "@/components/VideoEmbedGrid";
 import { CTASection } from "@/components/CTASection";
 import { getProjects } from "@/lib/cms";
 import type { ProjectEvent } from "@/data/projects";
-import Image from "next/image";
+import { SafeImage } from "@/components/SafeImage";
 import { Calendar, MapPin } from "lucide-react";
 
 interface PageProps {
@@ -15,6 +15,8 @@ interface PageProps {
     slug: string;
   }>;
 }
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -25,13 +27,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: project.title,
     description: project.excerpt,
   });
-}
-
-// Generate static params if building a static export, but we are using App Router normally.
-export function generateStaticParams() {
-  return getProjects().then((projects: ProjectEvent[]) => projects.map((p) => ({
-    slug: p.slug,
-  })));
 }
 
 export default async function ProjectEventDetailPage({ params }: PageProps) {
@@ -83,11 +78,7 @@ export default async function ProjectEventDetailPage({ params }: PageProps) {
       <section className="bg-midnight pb-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl -mt-10 relative z-20">
           <div className="aspect-[21/9] rounded-2xl overflow-hidden bg-charcoal border border-slate/10 flex items-center justify-center relative shadow-2xl">
-             {project.images?.[0] ? (
-               <Image src={project.images[0]} alt={project.title} fill className="object-cover" />
-             ) : (
-               <span className="text-slate/40 font-serif opacity-50">No hero image selected</span>
-             )}
+             <SafeImage src={project.images?.[0]} alt={project.title} fill className="object-cover" />
              <div className="absolute inset-0 bg-gold/5 mix-blend-overlay" />
           </div>
         </div>

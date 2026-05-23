@@ -3,6 +3,8 @@ import { ProjectsEventsIndex } from "@/components/ProjectsEventsIndex";
 import { getProjects } from "@/lib/cms";
 import type { ProjectEvent } from "@/data/projects";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProjectsEventsPage() {
   const projects = (await getProjects()) as ProjectEvent[];
 

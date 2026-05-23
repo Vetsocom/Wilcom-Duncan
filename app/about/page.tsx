@@ -5,11 +5,13 @@ import { ExpertiseCard } from "@/components/ExpertiseCard";
 import { CTASection } from "@/components/CTASection";
 import { getProfile } from "@/lib/cms";
 import { constructMetadata } from "@/lib/seo";
-import Image from "next/image";
+import { SafeImage } from "@/components/SafeImage";
 
 export const metadata: Metadata = constructMetadata({
   title: "About Wilcom Duncan | Business Development Consultant",
 });
+
+export const dynamic = "force-dynamic";
 
 type CmsProfile = {
   bio: string;
@@ -37,7 +39,7 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
               <div className="aspect-4/5 max-w-md mx-auto rounded-4xl overflow-hidden border border-white/10 shadow-2xl relative z-10">
-                <Image
+                <SafeImage
                   src={profileImages.about || "/images/blog-2.jpg"}
                   alt="Wilcom Duncan Biography"
                   fill
@@ -78,7 +80,7 @@ export default async function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl relative z-10">
           <SectionHeader heading="Leadership Philosophy" centered />
           <div className="aspect-video max-w-3xl mx-auto rounded-4xl overflow-hidden border border-white/10 shadow-2xl mb-12 relative">
-            <Image
+            <SafeImage
               src="/images/blog-1.jpg"
               alt="Wilcom Duncan Leadership Philosophy"
               fill
@@ -134,16 +136,16 @@ export default async function AboutPage() {
             
             <div className="grid grid-cols-2 gap-4">
                <div className="aspect-square rounded-4xl overflow-hidden border border-white/10 relative shadow-xl hover:scale-[1.02] transition-transform">
-                 <Image src={profileImages.speaker || "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg"} alt="Wilcom speaking" fill className="object-cover" />
+                 <SafeImage src={profileImages.speakerProfile || profileImages.speaker || "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg"} alt="Wilcom speaking" fill className="object-cover" />
                </div>
                <div className="aspect-square rounded-4xl overflow-hidden border border-white/10 relative mt-8 shadow-xl hover:scale-[1.02] transition-transform">
-                 <Image src={profileImages.hero || "/images/bootcamp/global-entrepreneur-week-session.jpg"} alt="Wilcom speaking" fill className="object-cover" />
+                 <SafeImage src={profileImages.hero || "/images/bootcamp/global-entrepreneur-week-session.jpg"} alt="Wilcom speaking" fill className="object-cover" />
                </div>
                <div className="aspect-square rounded-4xl overflow-hidden border border-white/10 relative -mt-8 shadow-xl hover:scale-[1.02] transition-transform">
-                 <Image src={profileImages.author || "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg"} alt="Conference Banner" fill className="object-cover" />
+                 <SafeImage src={profileImages.author || "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg"} alt="Conference Banner" fill className="object-cover" />
                </div>
                <div className="aspect-square rounded-4xl overflow-hidden border border-white/10 relative shadow-xl hover:scale-[1.02] transition-transform">
-                 <Image src={profileImages.contact || "/images/bootcamp/global-entrepreneur-week-session.jpg"} alt="Global Entrepreneur Week" fill className="object-cover" />
+                 <SafeImage src={profileImages.contact || "/images/bootcamp/global-entrepreneur-week-session.jpg"} alt="Global Entrepreneur Week" fill className="object-cover" />
                </div>
             </div>
           </div>

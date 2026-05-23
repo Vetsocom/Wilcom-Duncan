@@ -56,7 +56,7 @@ export default function AdminProfilePage() {
         <p className="text-sm text-gray-500">Choose or upload images visually. No file paths needed.</p>
         <ImagePicker label="Hero image" value={profile.images?.hero||''} onChange={value => updateImage('hero', value)} folder="profile" />
         <ImagePicker label="About image" value={profile.images?.about||''} onChange={value => updateImage('about', value)} folder="profile" />
-        <ImagePicker label="Speaker profile image" value={profile.images?.speaker||''} onChange={value => updateImage('speaker', value)} folder="profile" />
+        <ImagePicker label="Speaker profile image" value={profile.images?.speakerProfile||profile.images?.speaker||''} onChange={value => updateImage('speakerProfile', value)} folder="profile" />
         <ImagePicker label="Author image" value={profile.images?.author||''} onChange={value => updateImage('author', value)} folder="profile" />
         <ImagePicker label="Contact image" value={profile.images?.contact||''} onChange={value => updateImage('contact', value)} folder="profile" />
       </div>

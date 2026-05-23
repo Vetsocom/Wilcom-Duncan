@@ -2,15 +2,17 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { constructMetadata } from "@/lib/seo";
 import { CTASection } from "@/components/CTASection";
-import { getBlogPosts } from "@/lib/cms";
+import { getBlogPosts, getProfile } from "@/lib/cms";
 import type { BlogPost } from "@/data/blog";
-import Image from "next/image";
+import { SafeImage } from "@/components/SafeImage";
 
 interface PageProps {
   params: Promise<{
     slug: string;
   }>;
 }
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -23,16 +25,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export async function generateStaticParams() {
-  const posts = (await getBlogPosts()) as BlogPost[];
-  return posts.map((p) => ({
-    slug: p.slug,
-  }));
-}
-
 export default async function BlogDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const posts = (await getBlogPosts()) as BlogPost[];
+  const [posts, profile] = (await Promise.all([getBlogPosts(), getProfile()])) as [BlogPost[], { images?: Record<string, string> }];
   const post = posts.find((p) => p.slug === slug);
   
   if (!post) {
@@ -64,7 +59,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
       <section className="bg-midnight pb-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl -mt-10 relative z-20">
           <div className="aspect-21/9 rounded-3xl overflow-hidden bg-charcoal border border-white/10 flex items-center justify-center relative shadow-2xl">
-             <Image 
+             <SafeImage
                src={post.image} 
                alt={post.title} 
                fill 
@@ -99,7 +94,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
           
           <div className="mt-20 p-8 md:p-12 bg-charcoal/50 border border-white/10 rounded-3xl flex flex-col md:flex-row gap-8 items-center md:items-start">
             <div className="shrink-0 relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-gold/30">
-              <Image src="/images/blog-3.jpg" alt={post.author} fill className="object-cover" />
+              <SafeImage src={profile.images?.author || profile.images?.hero || "/images/blog-3.jpg"} alt={post.author} fill className="object-cover" />
             </div>
             <div>
               <h4 className="font-serif text-2xl font-bold text-ivory mb-2">About {post.author}</h4>

@@ -10,19 +10,22 @@ interface BootcampCardProps {
 }
 
 export function BootcampCard({ bootcamp, index }: BootcampCardProps) {
+  const isUpcomingBootcamp4 = bootcamp.slug === "ceos-bootcamp-4" && bootcamp.status === "upcoming";
+  const cardImage = isUpcomingBootcamp4 ? bootcamp.images?.[2] || bootcamp.images?.[0] : bootcamp.images?.[0];
+
   return (
     <MotionWrapper delay={index * 0.1} className="group premium-card relative overflow-hidden">
       <div className="flex h-full flex-col md:flex-row">
         <div className="relative w-full md:w-2/5">
            <ImageCard
-             src={bootcamp.images[0]}
+             src={cardImage}
              alt={bootcamp.title}
              className=" rounded-none border-0 shadow-none md:h-full md:min-h-68"
              sizes="(min-width: 768px) 40vw, 100vw"
            />
            <div className="absolute left-4 top-4 z-20">
-             <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${bootcamp.status === 'upcoming' ? 'bg-gold text-midnight' : 'bg-midnight/80 text-ivory border border-slate/20 backdrop-blur-sm'}`}>
-               {bootcamp.status}
+             <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${bootcamp.status === 'upcoming' ? 'bg-emerald-400 text-midnight' : 'bg-midnight/80 text-ivory border border-slate/20 backdrop-blur-sm'}`}>
+               {isUpcomingBootcamp4 ? "Coming Soon" : bootcamp.status}
              </span>
            </div>
         </div>

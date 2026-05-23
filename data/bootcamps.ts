@@ -14,6 +14,7 @@ export type Bootcamp = {
   videos: string[];
   testimonials: string[];
   published: boolean;
+  registrationOpen?: boolean;
   seoTitle?: string;
   seoDescription?: string;
 };
@@ -105,6 +106,7 @@ export const bootcamps: Bootcamp[] = [
     location: "To Be Confirmed",
     theme: "To Be Confirmed",
     status: "upcoming",
+    registrationOpen: true,
     overview: "An upcoming executive education experience for C-Suite executives, entrepreneurs, and experienced business leaders.",
     objectives: [
       "Strengthen business leadership capacity",
@@ -124,7 +126,13 @@ export const bootcamps: Bootcamp[] = [
       "Entrepreneurship discipline"
     ],
     speakers: ["Wilcom Duncan"],
-    images: ["/images/bootcamp/ceos-bootcamp-hero-speaker.jpg", "/images/bootcamp/bootcamp-featured-portrait.jpg", "/images/bootcamp/ceos-bootcamp-community-collage.jpg", "/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg", "/images/bootcamp/ceos-bootcamp-audience.jpg", "/images/bootcamp/global-entrepreneur-week-session.jpg"],
+    images: [
+      "/images/bootcamp/upcoming/ceos-bootcamp-4-side-profile.jpg",
+      "/images/bootcamp/upcoming/ceos-bootcamp-4-side-profile-alt.jpg",
+      "/images/bootcamp/upcoming/ceos-bootcamp-4-coming-soon-executive.jpg",
+      "/images/bootcamp/upcoming/ceos-bootcamp-4-coming-soon-woman.jpg",
+      "/images/bootcamp/upcoming/ceos-bootcamp-4-mobile-preview.jpg"
+    ],
     videos: [],
     testimonials: [],
     published: true

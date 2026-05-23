@@ -4,20 +4,31 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { BootcampCard } from "@/components/BootcampCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { CTASection } from "@/components/CTASection";
-import { getBootcamps } from "@/lib/cms";
+import { Button } from "@/components/Button";
+import { getBootcamps, getProfile } from "@/lib/cms";
 import type { Bootcamp } from "@/data/bootcamps";
 import { constructMetadata } from "@/lib/seo";
-import Image from "next/image";
+import { SafeImage } from "@/components/SafeImage";
+import Link from "next/link";
 
 export const metadata: Metadata = constructMetadata({
   title: "CEOs Bootcamp | Executive Business Leadership Platform",
 });
 
+export const dynamic = "force-dynamic";
+
 export default async function CEOsBootcampPage() {
-  const bootcamps = (await getBootcamps()) as Bootcamp[];
+  const [bootcamps, profile] = (await Promise.all([getBootcamps(), getProfile()])) as [Bootcamp[], { images?: Record<string, string> }];
   const publishedBootcamps = bootcamps.filter((b) => b.slug && b.published);
   const pastBootcamps = publishedBootcamps.filter(b => b.status === "past");
   const upcomingBootcamp = publishedBootcamps.find(b => b.status === "upcoming");
+  const bootcampImages = publishedBootcamps.flatMap((bootcamp) => bootcamp.images || []);
+  const heroImage = upcomingBootcamp?.images?.[0] || bootcampImages[0] || "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg";
+  const communityImage = upcomingBootcamp?.images?.[1] || bootcampImages[1] || "/images/bootcamp/ceos-bootcamp-community-collage.jpg";
+  const upcomingCardImage = upcomingBootcamp?.images?.[2] || heroImage;
+  const upcomingPosterImage = upcomingBootcamp?.images?.[3] || communityImage;
+  const upcomingMobileImage = upcomingBootcamp?.images?.[4] || upcomingCardImage;
+  const hostImage = profile.images?.speakerProfile || profile.images?.hero || "/images/bootcamp/bootcamp-featured-portrait.jpg";
 
   const learningCards = [
     { title: "Business Model Development", desc: "Understand how your business creates, delivers, and captures value." },
@@ -44,7 +55,7 @@ export default async function CEOsBootcampPage() {
         heading="CEOs Bootcamp"
         subheading="A Liberia's summit for CEOs by CEOs"
         intro="CEOs Bootcamp is designed to help business leaders sharpen their thinking, strengthen their leadership capacity, improve their business models, and connect with other entrepreneurs and executives committed to growth."
-        image="/images/bootcamp/ceos-bootcamp-hero-speaker.jpg"
+        image={heroImage}
       />
 
       {/* What is CEOs Bootcamp */}
@@ -64,8 +75,8 @@ export default async function CEOsBootcampPage() {
             </div>
             <div className="relative">
               <div className="aspect-4/3 rounded-4xl overflow-hidden border border-white/10 shadow-2xl relative z-10">
-                <Image
-                  src="/images/bootcamp/ceos-bootcamp-community-collage.jpg"
+                <SafeImage
+                  src={communityImage}
                   alt="CEOs Bootcamp Community"
                   fill
                   className="object-cover"
@@ -83,8 +94,8 @@ export default async function CEOsBootcampPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 relative">
               <div className="aspect-[4/5] max-w-md mx-auto rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative z-10">
-                <Image
-                  src="/images/bootcamp/bootcamp-featured-portrait.jpg"
+                <SafeImage
+                  src={hostImage}
                   alt="Featured Host"
                   fill
                   className="object-cover"
@@ -135,14 +146,90 @@ export default async function CEOsBootcampPage() {
 
       {/* Upcoming Bootcamp */}
       {upcomingBootcamp && (
-        <section id="upcoming" className="py-24 bg-charcoal relative overflow-hidden border-y border-gold/10">
-          <div className="absolute inset-0 bg-grid-white opacity-5" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/10 rounded-full blur-[120px] pointer-events-none" />
+        <section id="upcoming" className="relative overflow-hidden border-y border-emerald-400/20 bg-[#05070D] py-24">
+          <div className="absolute inset-0 bg-grid-white opacity-10" />
+          <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-emerald-400/70 to-transparent" />
+          <div className="pointer-events-none absolute left-[-10rem] top-20 h-96 w-96 rounded-full bg-emerald-500/15 blur-[120px]" />
+          <div className="pointer-events-none absolute bottom-[-12rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-gold/10 blur-[120px]" />
           
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <SectionHeader heading="Upcoming CEOs Bootcamp" centered />
-            <div className="max-w-4xl mx-auto">
-              <BootcampCard bootcamp={upcomingBootcamp} index={0} />
+            <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+              <div>
+                <div className="mb-5 inline-flex items-center rounded-full border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300">
+                  Coming Soon
+                </div>
+                <SectionHeader
+                  subheading="Upcoming Executive Bootcamp"
+                  heading={upcomingBootcamp.title}
+                  description={upcomingBootcamp.overview}
+                  className="mb-8"
+                />
+                <div className="mb-8 grid gap-3 text-sm text-slate-200 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                    <span className="block text-xs uppercase tracking-[0.18em] text-emerald-300">Date</span>
+                    <span className="mt-1 block font-semibold text-ivory">{upcomingBootcamp.date || "Coming soon"}</span>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                    <span className="block text-xs uppercase tracking-[0.18em] text-emerald-300">Location</span>
+                    <span className="mt-1 block font-semibold text-ivory">{upcomingBootcamp.location || "To be confirmed"}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+                  <Button asChild size="lg">
+                    <Link href={`/ceos-bootcamp/${upcomingBootcamp.slug}`}>Apply for Upcoming Bootcamp</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="border-emerald-400/50 text-emerald-200 hover:border-emerald-300 hover:bg-emerald-400/10">
+                    <Link href="/contact?type=bootcamp">Register Interest</Link>
+                  </Button>
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-[1fr_0.72fr]">
+                <div className="relative min-h-[28rem] overflow-hidden rounded-3xl border border-emerald-400/25 shadow-2xl shadow-black/40">
+                  <SafeImage
+                    src={heroImage}
+                    alt={`${upcomingBootcamp.title} promotional hero`}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#05070D]/70 via-transparent to-emerald-400/10" />
+                  <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-[#05070D]/75 px-4 py-3 backdrop-blur-md">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Executive Education</p>
+                    <p className="mt-1 font-serif text-2xl font-bold text-ivory">CEOs Bootcamp 4.0</p>
+                  </div>
+                </div>
+                <div className="grid gap-4">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-gold/20">
+                    <SafeImage
+                      src={upcomingCardImage}
+                      alt={`${upcomingBootcamp.title} event thumbnail`}
+                      fill
+                      sizes="(min-width: 1024px) 20vw, 50vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-emerald-400/25">
+                    <SafeImage
+                      src={upcomingMobileImage}
+                      alt={`${upcomingBootcamp.title} social promo preview`}
+                      fill
+                      sizes="(min-width: 1024px) 20vw, 50vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-emerald-400/20 sm:col-span-2">
+                  <SafeImage
+                    src={upcomingPosterImage}
+                    alt={`${upcomingBootcamp.title} alternate promotional poster`}
+                    fill
+                    sizes="(min-width: 1024px) 42vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -166,13 +253,13 @@ export default async function CEOsBootcampPage() {
           <SectionHeader heading="The Bootcamp Experience" centered />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="aspect-square rounded-[2rem] overflow-hidden border border-white/10 shadow-xl relative">
-               <Image src="/images/bootcamp/ceos-bootcamp-audience.jpg" alt="Audience" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+               <SafeImage src={bootcampImages[2] || "/images/bootcamp/ceos-bootcamp-audience.jpg"} alt="Audience" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             </div>
             <div className="aspect-square rounded-[2rem] overflow-hidden border border-white/10 shadow-xl relative">
-               <Image src="/images/bootcamp/strategic-foresight-2024-flyer.jpg" alt="Flyer" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+               <SafeImage src={bootcampImages[3] || "/images/bootcamp/strategic-foresight-2024-flyer.jpg"} alt="Flyer" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             </div>
             <div className="aspect-square rounded-[2rem] overflow-hidden border border-white/10 shadow-xl relative">
-               <Image src="/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg" alt="Speaker Spotlight" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+               <SafeImage src={bootcampImages[4] || "/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg"} alt="Speaker Spotlight" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             </div>
           </div>
         </div>

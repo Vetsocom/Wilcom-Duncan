@@ -8,15 +8,18 @@ import { BlogCard } from "@/components/BlogCard";
 import { CTASection } from "@/components/CTASection";
 import { Button } from "@/components/Button";
 import Link from "next/link";
-import { getBlogPosts, getCalendarActivities, getProfile, getProjects } from "@/lib/cms";
+import { getBlogPosts, getBootcamps, getCalendarActivities, getProfile, getProjects } from "@/lib/cms";
 import type { ProjectEvent } from "@/data/projects";
 import type { CalendarActivity } from "@/data/calendarActivities";
 import type { BlogPost } from "@/data/blog";
-import Image from "next/image";
+import type { Bootcamp } from "@/data/bootcamps";
+import { SafeImage } from "@/components/SafeImage";
 
 export const metadata: Metadata = {
   title: "Wilcom Duncan | SME Development Consultant, Speaker & Media Executive",
 };
+
+export const dynamic = "force-dynamic";
 
 type CmsProfile = {
   bio: string;
@@ -25,19 +28,24 @@ type CmsProfile = {
 };
 
 export default async function Home() {
-  const [profile, projects, calendarActivities, blogPosts] = await Promise.all([
+  const [profile, projects, calendarActivities, blogPosts, bootcamps] = await Promise.all([
     getProfile() as Promise<CmsProfile>,
     getProjects() as Promise<ProjectEvent[]>,
     getCalendarActivities() as Promise<CalendarActivity[]>,
     getBlogPosts() as Promise<BlogPost[]>,
+    getBootcamps() as Promise<Bootcamp[]>,
   ]);
   const featuredProjects = projects.slice(0, 3);
   const featuredBlogs = blogPosts.slice(0, 3);
   const profileImages = profile.images || {};
+  const featuredBootcampImage =
+    bootcamps.find((bootcamp) => bootcamp.status === "upcoming")?.images?.[0] ||
+    bootcamps[0]?.images?.[0] ||
+    "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg";
 
   return (
     <div>
-      <HeroEditorial />
+      <HeroEditorial imageSrc={profileImages.hero} />
 
       {/* About Preview */}
       <section className="py-24 bg-midnight relative">
@@ -45,7 +53,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 relative">
               <div className="aspect-4/5 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative z-10">
-                <Image
+                <SafeImage
                   src={profileImages.about || "/images/blog-3.jpg"}
                   alt="Wilcom Duncan portrait"
                   fill
@@ -136,14 +144,12 @@ export default async function Home() {
             <div className="relative">
               <div className="aspect-square md:aspect-4/3 rounded-2xl overflow-hidden bg-linear-to-br from-midnight to-slate/20 border border-slate/10 flex items-center justify-center relative z-10">
                 <div className="absolute inset-0 bg-gold/5 mix-blend-overlay" />
-                <span className="text-slate/40 font-serif opacity-50">
-                <Image
-                  src="/images/bootcamp/ceos-bootcamp-hero-speaker.jpg"
+                <SafeImage
+                  src={featuredBootcampImage}
                   alt="CEOs Bootcamp"
                   fill
                   className="object-cover"
                 />
-                </span>
               </div>
               <div className="absolute -bottom-6 -left-6 w-full h-full border border-gold/20 rounded-2xl -z-10" />
             </div>

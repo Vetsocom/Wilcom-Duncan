@@ -3,13 +3,23 @@ import { PageHero } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 import { CTASection } from "@/components/CTASection";
 import { constructMetadata } from "@/lib/seo";
+import { getProfile } from "@/lib/cms";
 import { Mic2, Users, Handshake, MonitorPlay, Briefcase } from "lucide-react";
 
 export const metadata: Metadata = constructMetadata({
   title: "Contact Wilcom Duncan | Speaking, Training & Partnership",
 });
 
-export default function ContactPage() {
+export const dynamic = "force-dynamic";
+
+type CmsProfile = {
+  images?: Record<string, string>;
+};
+
+export default async function ContactPage() {
+  const profile = (await getProfile()) as CmsProfile;
+  const contactImage = profile.images?.contact || "/images/blog-2.jpg";
+
   const contactOptions = [
     {
       title: "Book Wilcom for Speaking",
@@ -44,7 +54,7 @@ export default function ContactPage() {
         heading="Let's Build, Train, Speak, or Partner"
         subheading="Get In Touch"
         intro="Connect with Wilcom Duncan for speaking engagements, business training, media conversations, CEOs Bootcamp partnerships, and consultation opportunities."
-        image="/images/blog-2.jpg"
+        image={contactImage}
       />
 
       <section className="py-24 bg-midnight">
@@ -105,7 +115,7 @@ export default function ContactPage() {
         text="Whether it's a media appearance, business partnership, or executive training, we're ready to collaborate."
         primaryBtnText="Send an Email"
         primaryBtnLink="mailto:contact@wilcomduncan.com"
-        imageSrc="/images/blog-3.jpg"
+        imageSrc={profile.images?.author || contactImage || "/images/blog-3.jpg"}
       />
     </div>
   );
