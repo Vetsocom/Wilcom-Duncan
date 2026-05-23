@@ -114,7 +114,7 @@ export default async function ContactPage() {
         heading="Let's Create Real Value"
         text="Whether it's a media appearance, business partnership, or executive training, we're ready to collaborate."
         primaryBtnText="Send an Email"
-        primaryBtnLink="mailto:contact@wilcomduncan.com"
+        primaryBtnLink="mailto:wilcomduncan@gmail.com"
         imageSrc={profile.images?.author || contactImage || "/images/blog-3.jpg"}
       />
     </div>
