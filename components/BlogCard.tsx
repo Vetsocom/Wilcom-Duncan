@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BlogPost } from "@/data/blog";
 import { MotionWrapper } from "./MotionWrapper";
-import { ImageCard } from "./ImageCard";
+import { SafeImage } from "./SafeImage";
 import { ArrowRight } from "lucide-react";
 
 interface BlogCardProps {
@@ -10,14 +10,27 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post, index }: BlogCardProps) {
+  const cardImage = post.image || "";
+
   return (
     <MotionWrapper delay={index * 0.1} className="group premium-card flex h-full flex-col overflow-hidden">
-      <ImageCard
-        src={post.image}
-        alt={post.title}
-        className="aspect-[16/10] rounded-none border-0 shadow-none"
-        sizes="(min-width: 1024px) 33vw, 100vw"
-      />
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
+        {cardImage ? (
+          <SafeImage
+            src={cardImage}
+            alt={post.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover object-center transition duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(201,154,61,0.26),transparent_34%),linear-gradient(135deg,#111827,#070B14_55%,#0F172A)]"
+            aria-label={post.title}
+            role="img"
+          />
+        )}
+      </div>
       
       <div className="flex flex-grow flex-col justify-between p-6 md:p-8">
         <div>

@@ -39,6 +39,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
   const halfLength = Math.ceil(contentParagraphs.length / 2);
   const firstHalf = contentParagraphs.slice(0, halfLength);
   const secondHalf = contentParagraphs.slice(halfLength);
+  const heroImage =
+    post.image ||
+    (post as BlogPost & { featuredImage?: string }).featuredImage ||
+    (post as BlogPost & { imageUrl?: string }).imageUrl ||
+    "";
 
   return (
     <div>
@@ -57,15 +62,31 @@ export default async function BlogDetailPage({ params }: PageProps) {
       </section>
 
       <section className="bg-midnight pb-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl -mt-10 relative z-20">
-          <div className="aspect-21/9 rounded-3xl overflow-hidden bg-charcoal border border-white/10 flex items-center justify-center relative shadow-2xl">
-             <SafeImage
-               src={post.image} 
-               alt={post.title} 
-               fill 
-               className="object-fill" 
-             />
-          </div>
+        <div className="container relative z-20 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          {heroImage ? (
+            <div className="relative mt-10 aspect-[16/9] w-full overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-2xl">
+              <SafeImage
+                src={heroImage}
+                alt={post.title}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 960px"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#05070D]/45 via-transparent to-transparent" />
+            </div>
+          ) : (
+            <div className="mt-10 flex aspect-[16/9] w-full items-center justify-center rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#0F1A14] via-[#080D16] to-[#05070D] shadow-2xl">
+              <div className="text-center">
+                <p className="text-sm uppercase tracking-[0.24em] text-[#C99A3D]">
+                  Wilcom Duncan
+                </p>
+                <p className="mt-3 font-serif text-3xl text-[#F5EFE4]">
+                  Business Insights
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
