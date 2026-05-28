@@ -7,7 +7,7 @@ import ImagePicker from '@/components/admin/ImagePicker';
 const inputCls = "w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#d4af37] transition-colors";
 const btnPrimary = "flex items-center gap-2 bg-[#d4af37] text-black font-semibold rounded-lg px-5 py-2.5 hover:bg-[#e5c158] transition-colors disabled:opacity-50";
 
-const emptyActivity = { title:'', date:'', time:'', location:'', type:'training', description:'', link:'', image:'' };
+const emptyActivity = { title:'', date:'', time:'', location:'', type:'training', description:'', link:'', image:'', applicationOpen:false };
 
 export default function AdminCalendarPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -54,11 +54,15 @@ export default function AdminCalendarPage() {
           <div><label className="block text-sm text-gray-300 mb-2">Location</label><input value={editing.location||''} onChange={e=>setEditing({...editing,location:e.target.value})} className={inputCls} /></div>
           <div><label className="block text-sm text-gray-300 mb-2">Type</label>
             <select value={editing.type||'training'} onChange={e=>setEditing({...editing,type:e.target.value})} className={inputCls}>
-              <option value="training">Training</option><option value="bootcamp">Bootcamp</option><option value="speaking">Speaking</option><option value="workshop">Workshop</option><option value="media">Media</option><option value="other">Other</option>
+              <option value="training">Training</option><option value="bootcamp">Bootcamp</option><option value="consultation">Consultation</option><option value="speaking">Speaking</option><option value="workshop">Workshop</option><option value="media">Media</option><option value="other">Other</option>
             </select>
           </div>
           <div><label className="block text-sm text-gray-300 mb-2">Link</label><input value={editing.link||''} onChange={e=>setEditing({...editing,link:e.target.value})} className={inputCls} placeholder="Optional URL" /></div>
         </div>
+        <label className="flex items-center gap-3 text-sm text-gray-300">
+          <input type="checkbox" checked={Boolean(editing.applicationOpen)} onChange={e=>setEditing({...editing,applicationOpen:e.target.checked})} className="h-4 w-4 accent-[#d4af37]" />
+          Accept applications or registrations from the public calendar
+        </label>
         <ImagePicker label="Optional activity image" value={editing.image||''} onChange={value=>setEditing({...editing,image:value})} folder="general" />
         <div><label className="block text-sm text-gray-300 mb-2">Description</label><textarea rows={3} value={editing.description||''} onChange={e=>setEditing({...editing,description:e.target.value})} className={inputCls+" resize-y"} /></div>
       </div>

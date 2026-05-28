@@ -49,6 +49,8 @@ export default function AdminProfilePage() {
         <div><label className="block text-sm text-gray-300 mb-2">Full Name</label><input type="text" value={profile.name||''} onChange={e => update('name', e.target.value)} className={inputCls} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Location</label><input type="text" value={profile.location||''} onChange={e => update('location', e.target.value)} className={inputCls} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Bio</label><textarea rows={5} value={profile.bio||''} onChange={e => update('bio', e.target.value)} className={inputCls + " resize-y"} /></div>
+        <div><label className="block text-sm text-gray-300 mb-2">Homepage Hero Paragraph</label><textarea rows={4} value={profile.heroParagraph||''} onChange={e => update('heroParagraph', e.target.value)} className={inputCls + " resize-y"} /></div>
+        <div><label className="block text-sm text-gray-300 mb-2">Homepage About Preview Text</label><textarea rows={5} value={profile.aboutPreviewText||''} onChange={e => update('aboutPreviewText', e.target.value)} className={inputCls + " resize-y"} /></div>
       </div>
 
       <div className={cardCls}>
@@ -64,6 +66,43 @@ export default function AdminProfilePage() {
       <div className={cardCls}>
         <h2 className="text-lg font-semibold text-white">Titles (one per line)</h2>
         <textarea rows={6} value={(profile.titles||[]).join('\n')} onChange={e => update('titles', e.target.value.split('\n').filter((t:string)=>t.trim()))} className={inputCls + " resize-y font-mono text-sm"} />
+      </div>
+
+      <div className={cardCls}>
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-semibold text-white">Homepage Impact Stats</h2>
+            <p className="text-sm text-gray-500 mt-1">{profile.impactStatsNote || 'Replace these numbers with verified client-approved impact figures.'}</p>
+          </div>
+          <button onClick={() => update('impactStats', [...(profile.impactStats||[]), {value:'', label:''}])} className="text-sm text-[#d4af37] hover:text-[#e5c158]">+ Add</button>
+        </div>
+        {(profile.impactStats||[]).map((stat:any,i:number) => (
+          <div key={i} className="grid grid-cols-1 md:grid-cols-[120px,1fr,auto] gap-3">
+            <input placeholder="Value" value={stat.value||''} onChange={e => { const u=[...profile.impactStats]; u[i]={...u[i],value:e.target.value}; update('impactStats',u); }} className={inputCls + " text-sm"} />
+            <input placeholder="Label" value={stat.label||''} onChange={e => { const u=[...profile.impactStats]; u[i]={...u[i],label:e.target.value}; update('impactStats',u); }} className={inputCls + " text-sm"} />
+            <button onClick={() => update('impactStats', profile.impactStats.filter((_:any,idx:number)=>idx!==i))} className="text-red-400 hover:text-red-300 text-sm px-2">Remove</button>
+          </div>
+        ))}
+      </div>
+
+      <div className={cardCls}>
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-semibold text-white">Homepage Testimonials</h2>
+            <p className="text-sm text-gray-500 mt-1">{profile.testimonialsNote || 'Replace with verified testimonials provided by the client.'}</p>
+          </div>
+          <button onClick={() => update('testimonials', [...(profile.testimonials||[]), {quote:'',name:'',role:''}])} className="text-sm text-[#d4af37] hover:text-[#e5c158]">+ Add</button>
+        </div>
+        {(profile.testimonials||[]).map((testimonial:any,i:number) => (
+          <div key={i} className="rounded-lg border border-white/5 bg-black/20 p-4 space-y-3">
+            <textarea rows={3} placeholder="Testimonial quote" value={testimonial.quote||''} onChange={e => { const u=[...profile.testimonials]; u[i]={...u[i],quote:e.target.value}; update('testimonials',u); }} className={inputCls + " resize-y text-sm"} />
+            <div className="grid grid-cols-1 md:grid-cols-[1fr,1fr,auto] gap-3">
+              <input placeholder="Name" value={testimonial.name||''} onChange={e => { const u=[...profile.testimonials]; u[i]={...u[i],name:e.target.value}; update('testimonials',u); }} className={inputCls + " text-sm"} />
+              <input placeholder="Role" value={testimonial.role||''} onChange={e => { const u=[...profile.testimonials]; u[i]={...u[i],role:e.target.value}; update('testimonials',u); }} className={inputCls + " text-sm"} />
+              <button onClick={() => update('testimonials', profile.testimonials.filter((_:any,idx:number)=>idx!==i))} className="text-red-400 hover:text-red-300 text-sm px-2">Remove</button>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className={cardCls}>

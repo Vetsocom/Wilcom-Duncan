@@ -22,7 +22,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#05070D]/80 backdrop-blur-xl">
+    <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/12 bg-black/85 backdrop-blur-xl">
       <div className="site-container">
         <div className="flex h-[72px] items-center justify-between gap-6">
           <Link
@@ -30,7 +30,7 @@ export function Navbar() {
             className="flex shrink-0 items-center font-serif text-2xl font-bold tracking-wide text-ivory sm:text-[1.7rem]"
             onClick={() => setIsOpen(false)}
           >
-            <span className="text-gold">W.</span>
+            <span className="text-white">W.</span>
             <span className="ml-1">Duncan</span>
           </Link>
           
@@ -43,15 +43,15 @@ export function Navbar() {
                     <Link
                       href={link.href}
                       className={cn(
-                        "relative text-sm font-medium transition-colors hover:text-gold",
-                        isActive ? "text-gold" : "text-slate-300"
+                        "relative text-sm font-medium transition-colors hover:text-white",
+                        isActive ? "text-white" : "text-slate-300"
                       )}
                     >
                       {link.name}
                       {isActive && (
                         <motion.div
                           layoutId="navbar-indicator"
-                          className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gold rounded-full"
+                          className="absolute -bottom-2 left-0 right-0 h-0.5 bg-white rounded-full"
                         />
                       )}
                     </Link>
@@ -63,14 +63,14 @@ export function Navbar() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <Button asChild variant="default" size="sm">
-              <Link href="/contact">Book Wilcom</Link>
+              <Link href="/contact#schedule">Schedule Consultation</Link>
             </Button>
           </div>
 
           <div className="lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-ivory transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/70"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-ivory transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isOpen}
             >
@@ -87,7 +87,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-b border-white/10 bg-[#05070D]/95 backdrop-blur-xl lg:hidden"
+            className="overflow-hidden border-b border-white/10 bg-black/95 backdrop-blur-xl lg:hidden"
           >
             <div className="site-container space-y-3 pb-6 pt-4">
               {navLinks.map((link) => {
@@ -99,7 +99,7 @@ export function Navbar() {
                     onClick={() => setIsOpen(false)}
                     className={cn(
                       "block rounded-2xl px-4 py-3 text-base font-medium transition",
-                      isActive ? "bg-gold/10 text-gold" : "text-slate-300 hover:bg-white/[0.06] hover:text-ivory"
+                      isActive ? "bg-white/10 text-white" : "text-slate-300 hover:bg-white/[0.06] hover:text-ivory"
                     )}
                   >
                     {link.name}
@@ -108,7 +108,7 @@ export function Navbar() {
               })}
               <div className="pt-2">
                 <Button asChild className="w-full sm:w-auto">
-                  <Link href="/contact" onClick={() => setIsOpen(false)}>Book Wilcom</Link>
+                  <Link href="/contact#schedule" onClick={() => setIsOpen(false)}>Schedule Consultation</Link>
                 </Button>
               </div>
             </div>

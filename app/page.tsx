@@ -8,7 +8,7 @@ import { BlogCard } from "@/components/BlogCard";
 import { CTASection } from "@/components/CTASection";
 import { Button } from "@/components/Button";
 import Link from "next/link";
-import { getBlogPosts, getBootcamps, getCalendarActivities, getProfile, getProjects } from "@/lib/cms";
+import { getBlogPosts, getBootcamps, getCalendarActivities, getProfile, getProjects, getSettings } from "@/lib/cms";
 import type { ProjectEvent } from "@/data/projects";
 import type { CalendarActivity } from "@/data/calendarActivities";
 import type { BlogPost } from "@/data/blog";
@@ -16,24 +16,35 @@ import type { Bootcamp } from "@/data/bootcamps";
 import { SafeImage } from "@/components/SafeImage";
 
 export const metadata: Metadata = {
-  title: "Wilcom Duncan | SME Development Consultant, Speaker & Media Executive",
+  title: "Wilcom Duncan | SME Development Consultant & Executive Business Trainer",
+  description:
+    "Official website of Wilcom Duncan, Liberian SME Development Consultant, entrepreneur, speaker, media executive, and founder of CEOs Bootcamp.",
 };
 
 export const dynamic = "force-dynamic";
 
 type CmsProfile = {
   bio: string;
+  heroParagraph: string;
+  aboutPreviewText: string;
+  impactStats: { value: string; label: string }[];
+  testimonials: { quote: string; name: string; role: string }[];
   expertiseAreas: { title: string; description: string }[];
   images?: Record<string, string>;
 };
 
+type CmsSettings = {
+  schedulingLink?: string;
+};
+
 export default async function Home() {
-  const [profile, projects, calendarActivities, blogPosts, bootcamps] = await Promise.all([
+  const [profile, projects, calendarActivities, blogPosts, bootcamps, settings] = await Promise.all([
     getProfile() as Promise<CmsProfile>,
     getProjects() as Promise<ProjectEvent[]>,
     getCalendarActivities() as Promise<CalendarActivity[]>,
     getBlogPosts() as Promise<BlogPost[]>,
     getBootcamps() as Promise<Bootcamp[]>,
+    getSettings() as Promise<CmsSettings>,
   ]);
   const featuredProjects = projects.slice(0, 3);
   const featuredBlogs = blogPosts.slice(0, 3);
@@ -45,7 +56,7 @@ export default async function Home() {
 
   return (
     <div>
-      <HeroEditorial imageSrc={profileImages.hero} />
+      <HeroEditorial imageSrc={profileImages.hero} intro={profile.heroParagraph} />
 
       {/* About Preview */}
       <section className="py-24 bg-midnight relative">
@@ -60,19 +71,38 @@ export default async function Home() {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 w-full h-full border border-gold/20 rounded-3xl -z-10" />
+              <div className="absolute -bottom-6 -left-6 w-full h-full border border-white/15 rounded-3xl -z-10" />
             </div>
             <div className="order-1 lg:order-2">
               <SectionHeader 
-                heading="A Voice for Business Growth, Leadership, and Enterprise Development"
+                heading="From Business Insight to Executive Action"
               />
               <p className="text-slate text-lg md:text-xl leading-relaxed mb-8">
-                {profile.bio}
+                {profile.aboutPreviewText}
               </p>
               <Button asChild size="lg">
                 <Link href="/about">Learn More About Wilcom</Link>
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Impact Stats */}
+      <section className="py-24 bg-charcoal border-y border-white/10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            subheading="Impact at a Glance"
+            heading="Built Around Business Growth, Leadership, and Execution"
+            description="Across bootcamps, business sessions, media conversations, and executive engagements, Wilcom's work is centered on helping leaders think clearly, communicate value, and build stronger organizations."
+          />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {profile.impactStats.map((stat) => (
+              <div key={`${stat.value}-${stat.label}`} className="premium-card min-h-48 p-7 hover:border-white/25">
+                <p className="mb-5 font-serif text-5xl font-bold text-white">{stat.value}</p>
+                <p className="text-sm leading-7 text-slate-300">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -116,7 +146,7 @@ export default async function Home() {
       </section>
 
       {/* CEOs Bootcamp Feature */}
-      <section className="py-24 bg-charcoal relative overflow-hidden border-y border-gold/10">
+      <section className="py-24 bg-charcoal relative overflow-hidden border-y border-white/10">
         <div className="absolute inset-0 bg-grid-white opacity-10" />
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-1/2 h-[600px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
         
@@ -151,7 +181,7 @@ export default async function Home() {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 w-full h-full border border-gold/20 rounded-2xl -z-10" />
+              <div className="absolute -bottom-6 -left-6 w-full h-full border border-white/15 rounded-2xl -z-10" />
             </div>
           </div>
         </div>
@@ -167,7 +197,32 @@ export default async function Home() {
               centered
             />
           </div>
-          <CalendarActivities activities={calendarActivities} />
+          <CalendarActivities activities={calendarActivities} schedulingLink={settings.schedulingLink} />
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-24 bg-charcoal border-y border-white/10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            subheading="Social Proof"
+            heading="What Leaders and Participants Say"
+            description="Real voices from entrepreneurs, executives, and participants who have experienced Wilcom's business development sessions and CEOs Bootcamp programs."
+          />
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {profile.testimonials.map((testimonial) => (
+              <figure key={`${testimonial.name}-${testimonial.role}`} className="premium-card flex h-full flex-col p-8">
+                <p aria-hidden="true" className="mb-5 font-serif text-5xl leading-none text-white/40">&ldquo;</p>
+                <blockquote className="grow font-serif text-xl leading-9 text-white">
+                  {testimonial.quote}
+                </blockquote>
+                <figcaption className="mt-8 border-t border-white/10 pt-5">
+                  <p className="font-semibold text-white">{testimonial.name}</p>
+                  <p className="text-sm text-slate-300">{testimonial.role}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -195,12 +250,12 @@ export default async function Home() {
 
       {/* Final CTA */}
       <CTASection 
-        heading="Book Wilcom for Speaking, Training, Partnership, or Consultation"
-        text="Whether you are planning a business training, leadership event, media conversation, entrepreneurship program, or corporate development session, Wilcom Duncan brings practical insight, strong communication, and business-focused strategy to the room."
-        primaryBtnText="Contact Wilcom"
-        primaryBtnLink="/contact"
-        secondaryBtnText="Partner with CEOs Bootcamp"
-        secondaryBtnLink="/contact?type=partnership"
+        heading="Ready to Bring Wilcom Into the Room?"
+        text="Book a consultation, invite Wilcom to speak, or partner with CEOs Bootcamp to create a business learning experience built around clarity, execution, and growth."
+        primaryBtnText="Schedule Consultation"
+        primaryBtnLink="/contact#schedule"
+        secondaryBtnText="Send Inquiry"
+        secondaryBtnLink="/contact#inquiry-form"
         imageSrc="/images/blog-2.jpg"
       />
     </div>

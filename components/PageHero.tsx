@@ -14,9 +14,9 @@ interface PageHeroProps {
 export function PageHero({ heading, subheading, intro, image, imageAlt, className }: PageHeroProps) {
   return (
     <section className={cn("relative overflow-hidden border-b border-white/10 bg-grid-white pt-32 pb-16 md:pt-40 md:pb-24", className)}>
-      <div className="absolute inset-0 bg-[#05070D]/92" />
-      <div className="pointer-events-none absolute left-48 top-10 h-136 w-136 rounded-full bg-gold/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-48 bottom-0 h-120 w-120 rounded-full bg-emerald/10 blur-[120px]" />
+      <div className="absolute inset-0 bg-black/92" />
+      <div className="pointer-events-none absolute left-48 top-10 h-136 w-136 rounded-full bg-white/[0.06] blur-[120px]" />
+      <div className="pointer-events-none absolute -right-48 bottom-0 h-120 w-120 rounded-full bg-white/[0.04] blur-[120px]" />
       
       <div className="site-container relative z-10">
         <div className={cn("grid items-center gap-10", image ? "lg:grid-cols-[1fr_0.75fr]" : "text-center")}>
@@ -38,7 +38,7 @@ export function PageHero({ heading, subheading, intro, image, imageAlt, classNam
 
           {image ? (
             <MotionWrapper delay={0.1} className="relative mx-auto w-full lg:w-md lg:mr-0">
-              <div className="absolute -inset-3 rounded-4xl border border-gold/25" />
+              <div className="absolute -inset-3 rounded-4xl border border-white/15" />
               <ImageCard
                 src={image}
                 alt={imageAlt || heading}

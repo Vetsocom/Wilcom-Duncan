@@ -1,13 +1,16 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { BriefcaseBusiness, Handshake, Mail, Mic2, MonitorPlay, Presentation, Users } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
-import { CTASection } from "@/components/CTASection";
+import { Button } from "@/components/Button";
 import { constructMetadata } from "@/lib/seo";
-import { getProfile } from "@/lib/cms";
-import { Mic2, Users, Handshake, MonitorPlay, Briefcase } from "lucide-react";
+import { getProfile, getSettings } from "@/lib/cms";
 
 export const metadata: Metadata = constructMetadata({
-  title: "Contact Wilcom Duncan | Speaking, Training & Partnership",
+  title: "Contact Wilcom Duncan | Schedule a Consultation",
+  description:
+    "Schedule a consultation or send an inquiry for executive training, speaking engagements, media requests, and CEOs Bootcamp partnerships.",
 });
 
 export const dynamic = "force-dynamic";
@@ -16,107 +19,156 @@ type CmsProfile = {
   images?: Record<string, string>;
 };
 
-export default async function ContactPage() {
-  const profile = (await getProfile()) as CmsProfile;
-  const contactImage = profile.images?.contact || "/images/blog-2.jpg";
+type CmsSettings = {
+  schedulingLink?: string;
+  contactEmail?: string;
+  phone?: string;
+  whatsapp?: string;
+};
 
-  const contactOptions = [
-    {
-      title: "Book Wilcom for Speaking",
-      description: "Invite Wilcom to speak at your business event, conference, entrepreneurship program, or leadership gathering.",
-      icon: <Mic2 className="text-gold w-8 h-8 mb-4" />,
-    },
-    {
-      title: "Request a Business Training",
-      description: "Bring practical business development, communication, branding, or leadership training to your team or organization.",
-      icon: <Users className="text-gold w-8 h-8 mb-4" />,
-    },
-    {
-      title: "Partner with CEOs Bootcamp",
-      description: "Collaborate with CEOs Bootcamp through sponsorship, partnership, venue support, media support, or participant sponsorship.",
-      icon: <Handshake className="text-gold w-8 h-8 mb-4" />,
-    },
-    {
-      title: "Media or Interview Request",
-      description: "Invite Wilcom for interviews, podcasts, business conversations, panels, or media features.",
-      icon: <MonitorPlay className="text-gold w-8 h-8 mb-4" />,
-    },
-    {
-      title: "Business Consultation",
-      description: "Request a consultation around SME development, business communication, brand positioning, or growth strategy.",
-      icon: <Briefcase className="text-gold w-8 h-8 mb-4" />,
-    },
-  ];
+const inquiryTypes = [
+  { title: "Executive Consultation", icon: BriefcaseBusiness },
+  { title: "Speaking Engagement", icon: Mic2 },
+  { title: "Corporate Training", icon: Presentation },
+  { title: "CEOs Bootcamp Partnership", icon: Handshake },
+  { title: "Media / Interview Request", icon: MonitorPlay },
+  { title: "Business Development Support", icon: Users },
+];
+
+export default async function ContactPage() {
+  const [profile, settings] = await Promise.all([
+    getProfile() as Promise<CmsProfile>,
+    getSettings() as Promise<CmsSettings>,
+  ]);
+  const contactImage = profile.images?.contact || "/images/blog-2.jpg";
+  const contactEmail = settings.contactEmail || "wilcomduncan@gmail.com";
+  const phone = settings.phone || settings.whatsapp || "+231 77 030 2296";
+  const phoneLink = phone.replace(/[^\d+]/g, "");
+  const schedulingLink =
+    settings.schedulingLink && !settings.schedulingLink.includes("replace-with-client-link")
+      ? settings.schedulingLink
+      : null;
 
   return (
     <div>
-      <PageHero 
-        heading="Let's Build, Train, Speak, or Partner"
-        subheading="Get In Touch"
-        intro="Connect with Wilcom Duncan for speaking engagements, business training, media conversations, CEOs Bootcamp partnerships, and consultation opportunities."
+      <PageHero
+        heading="Schedule a Consultation or Send a Direct Inquiry"
+        subheading="Executive Engagements"
+        intro="For speaking engagements, executive training, business consultation, media requests, and CEOs Bootcamp partnerships."
         image={contactImage}
       />
 
-      <section className="py-24 bg-midnight">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-            
-            <div className="lg:col-span-5 space-y-12">
-              <div>
-                <h2 className="font-serif text-3xl font-bold text-ivory mb-8">How We Can Work Together</h2>
-                <div className="space-y-6">
-                  {contactOptions.map((option, i) => (
-                    <div key={i} className="flex gap-4 p-6 bg-charcoal border border-slate/10 rounded-xl hover:border-gold/30 transition-colors">
-                      <div className="shrink-0">{option.icon}</div>
-                      <div>
-                        <h3 className="font-serif text-xl font-bold text-ivory mb-2">{option.title}</h3>
-                        <p className="text-slate text-sm leading-relaxed">{option.description}</p>
-                      </div>
-                    </div>
-                  ))}
+      <section id="schedule" className="bg-midnight py-20 sm:py-24">
+        <div className="site-container">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <article className="premium-card flex flex-col p-7 sm:p-9">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-white/55">Priority Booking</p>
+              <h2 className="mb-4 font-serif text-3xl font-bold text-white">Schedule a Consultation</h2>
+              <p className="mb-8 grow text-base leading-8 text-slate">
+                For corporate clients, founders, and institutions ready to book a session, use the scheduling link to choose an available time.
+              </p>
+              {schedulingLink ? (
+                <Button asChild size="lg">
+                  <a href={schedulingLink} target="_blank" rel="noopener noreferrer">
+                    Schedule on Calendly
+                  </a>
+                </Button>
+              ) : (
+                <div className="rounded-full border border-white/15 px-6 py-4 text-center text-sm text-white/60">
+                  Scheduling link coming soon.
                 </div>
-              </div>
-              
-              <div className="p-8 bg-charcoal/50 border border-gold/20 rounded-xl">
-                <h3 className="font-serif text-xl font-bold text-ivory mb-4">Direct Contact Info</h3>
-                <ul className="space-y-4 text-slate">
-                  <li className="flex justify-between items-center border-b border-slate/10 pb-4">
-                    <span className="font-medium text-ivory">Location</span>
-                    <span>Monrovia, Liberia</span>
-                  </li>
-                  <li className="flex justify-between items-center border-b border-slate/10 pb-4">
-                    <span className="font-medium text-ivory">Email</span>
-                    <a href="mailto:wilcomduncan@gmail.com" className="text-gold hover:underline">wilcomduncan@gmail.com</a>
-                  </li>
-                  <li className="flex justify-between items-center">
-                    <span className="font-medium text-ivory">Phone / WhatsApp</span>
-                    <a href="tel: +231 77 030 2296" className="text-gold hover:underline"> +231 77 030 2296</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+              )}
+            </article>
 
-            <div className="lg:col-span-7">
-              <div className="sticky top-28">
-                <div className="mb-8">
-                  <h2 className="font-serif text-3xl font-bold text-ivory mb-4">Send a Message</h2>
-                  <p className="text-slate">Fill out the form below and our team will get back to you as soon as possible.</p>
-                </div>
-                <ContactForm />
-              </div>
-            </div>
-            
+            <article className="premium-card flex flex-col p-7 sm:p-9">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-white/55">Direct Inquiry</p>
+              <h2 className="mb-4 font-serif text-3xl font-bold text-white">Send a Message</h2>
+              <p className="mb-8 grow text-base leading-8 text-slate">
+                For partnerships, media requests, sponsorships, or general inquiries, send a direct message to the team.
+              </p>
+              <Button asChild variant="outline" size="lg">
+                <Link href="#inquiry-form">Send an Inquiry</Link>
+              </Button>
+            </article>
           </div>
         </div>
       </section>
 
-      <CTASection 
-        heading="Let's Create Real Value"
-        text="Whether it's a media appearance, business partnership, or executive training, we're ready to collaborate."
-        primaryBtnText="Send an Email"
-        primaryBtnLink="mailto:wilcomduncan@gmail.com"
-        imageSrc={profile.images?.author || contactImage || "/images/blog-3.jpg"}
-      />
+      <section className="border-y border-white/10 bg-charcoal py-20">
+        <div className="site-container">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-white/55">Areas of Inquiry</p>
+            <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">Choose the Conversation That Fits</h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {inquiryTypes.map(({ title, icon: Icon }) => (
+              <div key={title} className="premium-card flex items-center gap-4 p-5">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04]">
+                  <Icon size={19} className="text-white" />
+                </span>
+                <p className="font-medium leading-6 text-white">{title}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="inquiry-form" className="bg-midnight py-20 sm:py-24">
+        <div className="site-container">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.18fr] lg:items-start">
+            <div>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-white/55">Direct Contact</p>
+              <h2 className="mb-5 font-serif text-3xl font-bold text-white sm:text-4xl">Send a Detailed Inquiry</h2>
+              <p className="mb-10 text-base leading-8 text-slate">
+                Share your brief, event, organization, or business need. The form remains available for engagements that need context before scheduling.
+              </p>
+              <div className="premium-card space-y-5 p-6 text-sm text-slate">
+                <div className="flex items-start gap-3">
+                  <Mail size={18} className="mt-1 shrink-0 text-white" />
+                  <div>
+                    <p className="mb-1 text-white">Email</p>
+                    <a href={`mailto:${contactEmail}`} className="transition hover:text-white">{contactEmail}</a>
+                  </div>
+                </div>
+                <div className="border-t border-white/10 pt-5">
+                  <p className="mb-1 text-white">Phone / WhatsApp</p>
+                  <a href={`tel:${phoneLink}`} className="transition hover:text-white">{phone}</a>
+                </div>
+                <div className="border-t border-white/10 pt-5">
+                  <p className="mb-1 text-white">Location</p>
+                  <p>Monrovia, Liberia</p>
+                </div>
+              </div>
+            </div>
+            <ContactForm />
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-charcoal py-20">
+        <div className="site-container text-center">
+          <h2 className="mx-auto mb-5 max-w-3xl font-serif text-3xl font-bold text-white sm:text-4xl">
+            Ready to Bring Wilcom Into the Room?
+          </h2>
+          <p className="mx-auto mb-9 max-w-2xl text-base leading-8 text-slate">
+            Start with a scheduled consultation or send a direct inquiry for a tailored engagement.
+          </p>
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            {schedulingLink ? (
+              <Button asChild size="lg">
+                <a href={schedulingLink} target="_blank" rel="noopener noreferrer">Schedule Consultation</a>
+              </Button>
+            ) : (
+              <Button asChild size="lg">
+                <Link href="#schedule">Schedule Consultation</Link>
+              </Button>
+            )}
+            <Button asChild variant="outline" size="lg">
+              <Link href="#inquiry-form">Send Inquiry</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

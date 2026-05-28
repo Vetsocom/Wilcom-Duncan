@@ -1,32 +1,42 @@
 [
   {
     "id": "1",
-    "title": "CEOs Bootcamp 4.0",
-    "date": "2026-11-06",
-    "time": "09:00 AM - 04:00 PM",
+    "title": "CEOs Bootcamp 4.0 Interest Registration",
+    "date": "2026-06-12",
+    "time": "5:00 PM",
     "location": "To Be Confirmed",
     "type": "Bootcamp",
-    "description": "An upcoming executive education experience for C-Suite executives, entrepreneurs, and experienced business leaders.",
+    "description": "Register interest for the upcoming CEOs Bootcamp 4.0 experience.",
     "applicationOpen": true
   },
   {
     "id": "2",
-    "title": "Corporate Branding Workshop",
-    "date": "2026-06-15",
-    "time": "10:00 AM - 01:00 PM",
-    "location": "Online",
-    "type": "Workshop",
-    "description": "A workshop on guiding businesses on how to communicate their identity, improve visibility, and build brands that earn trust.",
+    "title": "Business Growth Consultation Day",
+    "date": "2026-06-19",
+    "time": "11:00 AM",
+    "location": "Online / By Appointment",
+    "type": "Consultation",
+    "description": "A scheduled consultation window for founders, SMEs, and executives seeking business growth guidance.",
     "applicationOpen": true
   },
   {
     "id": "3",
-    "title": "Media Strategy Session",
-    "date": "2026-06-25",
-    "time": "02:00 PM - 05:00 PM",
-    "location": "Monrovia",
+    "title": "Corporate Communication Training",
+    "date": "2026-07-03",
+    "time": "2:00 PM",
+    "location": "Monrovia / Hybrid",
     "type": "Training",
-    "description": "Using media platforms, storytelling, interviews, and public visibility to support business leadership and brand authority.",
+    "description": "A practical session on communication, brand positioning, and executive presence.",
+    "applicationOpen": true
+  },
+  {
+    "id": "4",
+    "title": "CEOs Chat Recording Session",
+    "date": "2026-07-17",
+    "time": "4:00 PM",
+    "location": "Studio / Online",
+    "type": "Media",
+    "description": "A business conversation session featuring leadership, entrepreneurship, and growth insights.",
     "applicationOpen": false
   }
 ]

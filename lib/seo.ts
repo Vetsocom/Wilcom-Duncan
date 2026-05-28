@@ -1,12 +1,15 @@
 import { Metadata } from "next";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wilcomduncan.com";
+
 export const defaultMetadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     template: "%s | Wilcom Duncan",
-    default: "Wilcom Duncan | SME Development Consultant, Speaker & Media Executive",
+    default: "Wilcom Duncan | SME Development Consultant & Executive Business Trainer",
   },
   description:
-    "Official website of Wilcom Duncan, Liberian entrepreneur, SME Development Consultant, business trainer, speaker, media executive, and founder-connected voice behind CEOs Bootcamp and CEOs Chat.",
+    "Official website of Wilcom Duncan, Liberian SME Development Consultant, entrepreneur, speaker, media executive, and founder of CEOs Bootcamp.",
   keywords: [
     "Wilcom Duncan",
     "Liberia SME Development Consultant",
@@ -20,6 +23,15 @@ export const defaultMetadata: Metadata = {
     "executive training Liberia",
   ],
   authors: [{ name: "Wilcom Duncan" }],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: "Wilcom Duncan",
+    title: "Wilcom Duncan | SME Development Consultant & Executive Business Trainer",
+    description:
+      "Official website of Wilcom Duncan, Liberian SME Development Consultant, entrepreneur, speaker, media executive, and founder of CEOs Bootcamp.",
+  },
 };
 
 export function constructMetadata({

@@ -38,9 +38,9 @@ export function CTASection({
 
   return (
     <>
-      <section className="py-24 relative overflow-hidden bg-charcoal border-y border-gold/10">
+      <section className="py-24 relative overflow-hidden bg-charcoal border-y border-white/10">
         <div className="absolute inset-0 bg-grid-white opacity-20" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.06] rounded-full blur-[100px] pointer-events-none" />
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className={`grid grid-cols-1 ${imageSrc ? "lg:grid-cols-2 gap-16 items-center" : "text-center max-w-3xl mx-auto"}`}>
@@ -79,7 +79,7 @@ export function CTASection({
                     className="object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-6 -right-6 w-full h-full border border-gold/20 rounded-[2rem] -z-10" />
+                <div className="absolute -bottom-6 -right-6 w-full h-full border border-white/15 rounded-[2rem] -z-10" />
               </div>
             )}
           </div>

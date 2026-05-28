@@ -46,6 +46,7 @@ export default function AdminSettingsPage() {
         <h2 className="text-lg font-semibold text-white">SEO & Meta</h2>
         <div><label className="block text-sm text-gray-300 mb-2">Site Title</label><input value={settings.siteTitle||''} onChange={e=>update('siteTitle',e.target.value)} className={inputCls} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Site Description</label><textarea rows={2} value={settings.siteDescription||''} onChange={e=>update('siteDescription',e.target.value)} className={inputCls+" resize-y"} /></div>
+        <div><label className="block text-sm text-gray-300 mb-2">Site URL / Domain</label><input value={settings.siteUrl||''} onChange={e=>update('siteUrl',e.target.value)} className={inputCls} placeholder="https://wilcomduncan.com" /></div>
         <div><label className="block text-sm text-gray-300 mb-2">SEO Keywords</label><input value={settings.seoKeywords||''} onChange={e=>update('seoKeywords',e.target.value)} className={inputCls} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Default Meta Image</label><input value={settings.defaultMetaImage||''} onChange={e=>update('defaultMetaImage',e.target.value)} className={inputCls} /></div>
       </div>
@@ -53,6 +54,7 @@ export default function AdminSettingsPage() {
       <div className={cardCls}>
         <h2 className="text-lg font-semibold text-white">Contact</h2>
         <div><label className="block text-sm text-gray-300 mb-2">Contact Email</label><input value={settings.contactEmail||''} onChange={e=>update('contactEmail',e.target.value)} className={inputCls} /></div>
+        <div><label className="block text-sm text-gray-300 mb-2">Scheduling / Calendly Link</label><input value={settings.schedulingLink||''} onChange={e=>update('schedulingLink',e.target.value)} className={inputCls} placeholder="https://calendly.com/replace-with-client-link" /></div>
         <div><label className="block text-sm text-gray-300 mb-2">Phone</label><input value={settings.phone||''} onChange={e=>update('phone',e.target.value)} className={inputCls} /></div>
         <div><label className="block text-sm text-gray-300 mb-2">WhatsApp</label><input value={settings.whatsapp||''} onChange={e=>update('whatsapp',e.target.value)} className={inputCls} /></div>
       </div>

@@ -63,6 +63,37 @@ const ceosBootcamp4Images = [
   '/images/bootcamp/upcoming/ceos-bootcamp-4-mobile-preview.jpg',
 ];
 
+const defaultHeroParagraph =
+  'Wilcom Duncan is a Liberian entrepreneur, SME Development Consultant, speaker, trainer, and media executive helping founders, SMEs, and corporate leaders build with clarity, structure, and long-term value.';
+
+const defaultAboutPreviewText =
+  "Wilcom's work goes beyond motivation. He helps business leaders examine how their companies create value, communicate with the market, position their brands, and prepare for sustainable growth. His sessions are practical, direct, and built for entrepreneurs and executives who want to move from ideas to execution.";
+
+const defaultImpactStats = [
+  { value: '5+', label: 'Bootcamp & Executive Learning Experiences' },
+  { value: '100+', label: 'Entrepreneurs and Emerging Leaders Reached' },
+  { value: '10+', label: 'Business, Media, and Leadership Engagements' },
+  { value: '1', label: 'Mission: Building Value-Driven Business Leaders' },
+];
+
+const defaultTestimonials = [
+  {
+    quote: 'The session helped me rethink how my business creates value and how I communicate that value to customers.',
+    name: 'CEOs Bootcamp Participant',
+    role: 'Entrepreneur',
+  },
+  {
+    quote: 'Wilcom brings clarity, structure, and practical business thinking into the room. His approach is direct and useful for founders.',
+    name: 'Business Training Participant',
+    role: 'Founder',
+  },
+  {
+    quote: 'CEOs Bootcamp created a serious space for learning, networking, and honest reflection about business growth.',
+    name: 'CEOs Bootcamp Attendee',
+    role: 'SME Owner',
+  },
+];
+
 function normalizeBlogPost(post: any) {
   return {
     ...post,
@@ -106,6 +137,20 @@ function normalizeProfile(profile: any) {
   const images = profile?.images || {};
   return {
     ...profile,
+    heroParagraph: profile?.heroParagraph || defaultHeroParagraph,
+    aboutPreviewText: profile?.aboutPreviewText || defaultAboutPreviewText,
+    impactStats:
+      Array.isArray(profile?.impactStats) && profile.impactStats.length
+        ? profile.impactStats
+        : defaultImpactStats,
+    impactStatsNote:
+      profile?.impactStatsNote || 'Replace these numbers with verified client-approved impact figures.',
+    testimonials:
+      Array.isArray(profile?.testimonials) && profile.testimonials.length
+        ? profile.testimonials
+        : defaultTestimonials,
+    testimonialsNote:
+      profile?.testimonialsNote || 'Replace with verified testimonials provided by the client.',
     images: {
       hero: imageUrl(images.hero || profile?.heroImage),
       about: imageUrl(images.about || profile?.aboutImage),
@@ -113,6 +158,14 @@ function normalizeProfile(profile: any) {
       contact: imageUrl(images.contact || profile?.contactImage),
       author: imageUrl(images.author || profile?.authorImage),
     },
+  };
+}
+
+function normalizeSettings(settings: any) {
+  return {
+    ...settings,
+    siteUrl: settings?.siteUrl || 'https://wilcomduncan.com',
+    schedulingLink: settings?.schedulingLink || 'https://calendly.com/replace-with-client-link',
   };
 }
 
@@ -286,24 +339,25 @@ export async function saveCalendarActivities(activities: any[]) {
 export async function getSettings() {
   try {
     const settings = await withDatabase(() => Settings.findOne({ key: 'main' }).lean());
-    if (settings) return serializeDocument(settings);
+    if (settings) return normalizeSettings(serializeDocument(settings));
   } catch {
     // Fall back to bundled content when MongoDB is unavailable or not seeded.
   }
-  return readJson('settings.json');
+  return normalizeSettings(await readJson('settings.json'));
 }
 
 export async function updateSettings(data: any) {
+  const normalized = normalizeSettings(data);
   try {
     const updated = await withDatabase(() =>
       Settings.findOneAndUpdate(
         { key: 'main' },
-        { ...data, key: 'main' },
+        { ...normalized, key: 'main' },
         { upsert: true, new: true, setDefaultsOnInsert: true }
       ).lean()
     );
-    return serializeDocument(updated);
+    return normalizeSettings(serializeDocument(updated));
   } catch {
-    return writeJson('settings.json', data);
+    return writeJson('settings.json', normalized);
   }
 }
