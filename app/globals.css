@@ -35,7 +35,7 @@
   }
 
   * {
-    @apply border-white/10;
+    @apply border-white/12;
   }
 
   a {
@@ -86,7 +86,7 @@
   }
 
   .premium-card {
-    @apply rounded-3xl border border-white/10 bg-white/[0.04] shadow-xl shadow-black/20 transition hover:bg-white/[0.07];
+    @apply rounded-3xl border border-white/12 bg-white/4 shadow-xl shadow-black/20 transition hover:bg-white/[0.07];
   }
 }
 

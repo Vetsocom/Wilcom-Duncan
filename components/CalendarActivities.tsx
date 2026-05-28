@@ -132,6 +132,7 @@ export function CalendarActivities({ activities, schedulingLink }: CalendarActiv
                 const day = index + 1;
                 const dayActivities = getActivitiesForDay(day);
                 const hasActivity = dayActivities.length > 0;
+                const isSelected = selectedDay === day;
 
                 return (
                   <button
@@ -140,14 +141,16 @@ export function CalendarActivities({ activities, schedulingLink }: CalendarActiv
                     onClick={() => hasActivity && setSelectedDay(day)}
                     disabled={!hasActivity}
                     className={`relative flex aspect-square min-h-11 flex-col items-center justify-center rounded-xl border text-sm transition sm:text-base ${
-                      hasActivity
-                        ? "border-white/35 bg-white/[0.1] text-white hover:border-white hover:bg-white/[0.16]"
-                        : "border-white/[0.04] text-white/35"
+                      isSelected
+                        ? "border-white bg-white text-black font-semibold shadow-lg shadow-white/10"
+                        : hasActivity
+                        ? "border-white/30 bg-white/6 text-white hover:border-white/60 hover:bg-white/[0.1]"
+                        : "border-white/3 text-white/35"
                     }`}
                   >
                     {day}
                     {hasActivity && (
-                      <span className="absolute bottom-2 h-1.5 w-1.5 rounded-full bg-white" />
+                      <span className={`absolute bottom-2 h-1.5 w-1.5 rounded-full ${isSelected ? 'bg-black' : 'bg-white'}`} />
                     )}
                   </button>
                 );
@@ -155,8 +158,16 @@ export function CalendarActivities({ activities, schedulingLink }: CalendarActiv
             </div>
 
             {!activitiesForMonth.length && (
-              <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-white/65">
-                No public activities listed for this month yet. Check upcoming programs or schedule a consultation.
+              <div className="mt-7 rounded-2xl border border-white/12 bg-white/[0.04] p-6 text-center text-sm leading-7 text-white/65">
+                <p className="mb-4">No public activities listed for this month yet. Check upcoming programs or schedule a consultation.</p>
+                <Button asChild size="sm" variant="outline">
+                  <a
+                    href={configuredSchedulingLink || "/contact#schedule"}
+                    {...(configuredSchedulingLink ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
+                    Schedule a Consultation
+                  </a>
+                </Button>
               </div>
             )}
           </div>
