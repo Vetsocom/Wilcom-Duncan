@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { profile } from "@/data/profile";
-import { getSettings } from "@/lib/cms";
+import { getProfile, getSettings } from "@/lib/cms";
 import { SocialLinks } from "./SocialLinks";
 
 type FooterSettings = {
@@ -10,7 +9,10 @@ type FooterSettings = {
 };
 
 export async function Footer() {
-  const settings = (await getSettings()) as FooterSettings;
+  const [profile, settings] = await Promise.all([
+    getProfile(),
+    getSettings() as Promise<FooterSettings>,
+  ]);
   const email = settings.contactEmail || "wilcomduncan@gmail.com";
   const phone = settings.phone || "+231 77 030 2296";
   const phoneLink = phone.replace(/[^\d+]/g, "");

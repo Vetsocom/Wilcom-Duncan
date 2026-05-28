@@ -63,7 +63,7 @@ const ceosBootcamp4Images = [
 ];
 
 const defaultHeroParagraph =
-  'Wilcom Duncan is a Liberian entrepreneur, SME Development Consultant, speaker, trainer, and media executive helping founders, SMEs, and corporate leaders build with clarity, structure, and long-term value.';
+  'SME Development Consultant and Executive Business Trainer helping founders, corporate teams, and enterprises build with clarity, structure, and long-term value.';
 
 const defaultAboutPreviewText =
   "Wilcom's work goes beyond motivation. He helps business leaders examine how their companies create value, communicate with the market, position their brands, and prepare for sustainable growth. His sessions are practical, direct, and built for entrepreneurs and executives who want to move from ideas to execution.";
@@ -164,7 +164,7 @@ function normalizeSettings(settings: any) {
   return {
     ...settings,
     siteUrl: settings?.siteUrl || 'https://wilcomduncan.com',
-    schedulingLink: settings?.schedulingLink || 'https://calendly.com/replace-with-client-link',
+    schedulingLink: settings?.schedulingLink || 'https://calendly.com/wilcomduncan',
   };
 }
 

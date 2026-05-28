@@ -30,7 +30,7 @@ export default async function AboutPage() {
       <PageHero 
         heading="About Wilcom Duncan"
         subheading="Entrepreneur. SME Development Consultant. Speaker. Trainer. Media Executive."
-        intro="Wilcom Duncan is a Liberian entrepreneur, SME Development Consultant, business trainer, speaker, and media executive known for his work in business development, executive education, corporate communication, media, and entrepreneurship training."
+        intro="Empowering organizations, training executives, and structuring SMEs for sustainable growth across Africa."
       />
 
       {/* Biography */}
