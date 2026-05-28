@@ -18,7 +18,7 @@ export function HeroEditorial({ imageSrc, intro }: HeroEditorialProps) {
         <div className="max-w-4xl">
           <div className="space-y-8">
             <MotionWrapper>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-gold">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/70">
                 SME Development Consultant / Speaker / Media Executive
               </p>
               <h1 className="mt-5 max-w-4xl font-serif text-4xl font-bold leading-[0.95] text-ivory sm:text-5xl lg:text-7xl">

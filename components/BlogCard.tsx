@@ -25,7 +25,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
           />
         ) : (
           <div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(201,154,61,0.26),transparent_34%),linear-gradient(135deg,#111827,#070B14_55%,#0F172A)]"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.18),transparent_34%),linear-gradient(135deg,#161616,#080808_55%,#000000)]"
             aria-label={post.title}
             role="img"
           />
@@ -35,14 +35,14 @@ export function BlogCard({ post, index }: BlogCardProps) {
       <div className="flex flex-grow flex-col justify-between p-6 md:p-8">
         <div>
           <div className="mb-4 flex items-center justify-between gap-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-white/65">
               {post.category}
             </span>
             <span className="text-xs text-slate-400">
               {post.date}
             </span>
           </div>
-          <h3 className="mb-3 line-clamp-2 font-serif text-xl font-bold leading-tight text-ivory transition-colors group-hover:text-gold">
+          <h3 className="mb-3 line-clamp-2 font-serif text-xl font-bold leading-tight text-ivory transition-colors group-hover:text-white">
             {post.title}
           </h3>
           <p className="mb-6 line-clamp-3 text-sm leading-7 text-slate-300">
@@ -50,7 +50,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
           </p>
         </div>
         
-        <Link href={`/blog/${post.slug}`} className="mt-auto inline-flex w-fit items-center gap-2 rounded-full border border-gold/40 px-4 py-2 text-sm font-semibold text-gold transition hover:border-gold hover:bg-gold/10">
+        <Link href={`/blog/${post.slug}`} className="mt-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/30 px-4 py-2 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10">
           Read Article <ArrowRight size={16} />
         </Link>
       </div>

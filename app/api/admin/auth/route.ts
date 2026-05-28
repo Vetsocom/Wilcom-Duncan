@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     const validPassword = process.env.ADMIN_PASSWORD || 'password123';
 
     if (username === validUsername && password === validPassword) {
-      // In a real app, generate a proper JWT. For this mini-cms, a basic token works.
       const token = process.env.JWT_SECRET || 'super_secret_jwt_key_change_me_in_production';
       
       const response = NextResponse.json({ success: true });
@@ -17,7 +16,7 @@ export async function POST(request: Request) {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
-        maxAge: 60 * 60 * 24 // 1 day
+        maxAge: 60 * 60 * 24
       });
       
       return response;

@@ -50,7 +50,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-midnight relative border-b border-slate/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-3xl text-center">
           <div className="flex items-center justify-center gap-4 mb-6 text-sm">
-             <span className="text-gold font-semibold uppercase tracking-wider">{post.category}</span>
+             <span className="font-semibold uppercase tracking-wider text-white/65">{post.category}</span>
              <span className="text-slate/50">•</span>
              <span className="text-slate">{post.date}</span>
           </div>
@@ -73,15 +73,15 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 960px"
                 className="object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#05070D]/45 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
             </div>
           ) : (
-            <div className="mt-10 flex aspect-[16/9] w-full items-center justify-center rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#0F1A14] via-[#080D16] to-[#05070D] shadow-2xl">
+            <div className="mt-10 flex aspect-[16/9] w-full items-center justify-center rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#1a1a1a] via-[#080808] to-black shadow-2xl">
               <div className="text-center">
-                <p className="text-sm uppercase tracking-[0.24em] text-[#C99A3D]">
+                <p className="text-sm uppercase tracking-[0.24em] text-white/65">
                   Wilcom Duncan
                 </p>
-                <p className="mt-3 font-serif text-3xl text-[#F5EFE4]">
+                <p className="mt-3 font-serif text-3xl text-white">
                   Business Insights
                 </p>
               </div>
@@ -101,8 +101,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
               <p key={i}>{p}</p>
             ))}
             
-            <div className="my-16 bg-charcoal border-l-4 border-gold p-8 md:p-12 rounded-r-xl relative">
-              <span className="text-gold font-serif text-6xl absolute top-4 left-6 opacity-20">"</span>
+            <div className="relative my-16 rounded-r-xl border-l-4 border-white bg-charcoal p-8 md:p-12">
+              <span className="absolute left-6 top-4 font-serif text-6xl text-white opacity-20">"</span>
               <p className="font-serif text-2xl md:text-3xl text-ivory leading-snug relative z-10 italic m-0">
                 Business growth requires clarity, discipline, communication, and the ability to create value consistently.
               </p>
@@ -114,7 +114,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
           </div>
           
           <div className="mt-20 p-8 md:p-12 bg-charcoal/50 border border-white/10 rounded-3xl flex flex-col md:flex-row gap-8 items-center md:items-start">
-            <div className="shrink-0 relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-gold/30">
+            <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full border-2 border-white/25 md:h-40 md:w-40">
               <SafeImage src={profile.images?.author || profile.images?.hero || "/images/blog-3.jpg"} alt={post.author} fill className="object-cover" />
             </div>
             <div>

@@ -46,8 +46,8 @@ export default async function AboutPage() {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gold/5 rounded-full blur-[100px] pointer-events-none -z-10" />
-              <div className="absolute -bottom-6 -left-2 lg:-left-6 w-full max-w-md h-full border border-gold/20 rounded-[2rem] -z-10" />
+              <div className="absolute top-1/2 left-1/2 -z-10 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] blur-[100px] pointer-events-none" />
+              <div className="absolute -bottom-6 -left-2 -z-10 h-full w-full max-w-md rounded-[2rem] border border-white/20 lg:-left-6" />
             </div>
             
             <div>
@@ -90,15 +90,15 @@ export default async function AboutPage() {
           <p className="text-slate text-lg leading-relaxed mb-12">
             Wilcom believes that leadership is not only about position. It is about clarity, responsibility, communication, discipline, and the ability to create value for others.
           </p>
-          <div className="bg-charcoal border border-gold/20 p-8 md:p-12 rounded-2xl relative">
-            <span className="text-gold font-serif text-6xl absolute top-4 left-6 opacity-30">"</span>
+          <div className="relative rounded-2xl border border-white/15 bg-white/[0.04] p-8 md:p-12">
+            <span className="absolute left-6 top-4 font-serif text-6xl text-white opacity-20">"</span>
             <p className="font-serif text-2xl md:text-3xl text-ivory leading-snug relative z-10">
               Great businesses are not built by ideas alone. They are built by people who can think clearly, communicate value, and execute with discipline.
             </p>
-            <span className="text-gold font-serif text-6xl absolute bottom-0 right-6 opacity-30 rotate-180">"</span>
+            <span className="absolute bottom-0 right-6 rotate-180 font-serif text-6xl text-white opacity-20">"</span>
           </div>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.04] blur-[120px] pointer-events-none" />
       </section>
 
       {/* Platforms and Affiliations */}
@@ -127,7 +127,7 @@ export default async function AboutPage() {
               <ul className="space-y-4 mb-8">
                 {profile.speakingTopics.map((topic, index) => (
                   <li key={index} className="flex items-start gap-3 text-ivory">
-                    <div className="w-1.5 h-1.5 rounded-full bg-gold mt-2 shrink-0" />
+                    <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
                     <span>{topic}</span>
                   </li>
                 ))}

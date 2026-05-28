@@ -18,7 +18,7 @@ export function SectionHeader({
   return (
     <div className={cn("flex flex-col gap-4 mb-12", centered && "items-center text-center", className)}>
       {subheading && (
-        <span className="text-sm font-semibold uppercase tracking-[0.22em] text-gold">
+        <span className="text-sm font-semibold uppercase tracking-[0.22em] text-white/65">
           {subheading}
         </span>
       )}

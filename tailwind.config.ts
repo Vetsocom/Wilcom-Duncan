@@ -9,19 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#05070D",
-        foreground: "#F5EFE4",
-        midnight: "#05070D",
-        charcoal: "#080D16",
+        background: "#000000",
+        foreground: "#FFFFFF",
+        midnight: "#000000",
+        charcoal: "#080808",
         gold: {
-          DEFAULT: "#C99A3D",
-          light: "#E2B95B",
-          dark: "#A67A26",
+          DEFAULT: "#E5E5E5",
+          light: "#FFFFFF",
+          dark: "#B8B8B8",
         },
-        ivory: "#F5EFE4",
-        copper: "#A7653A",
-        slate: "#A7AFBD",
-        emerald: "#0F766E",
+        ivory: "#FFFFFF",
+        copper: "#B8B8B8",
+        slate: "#B8B8B8",
+        emerald: "#E5E5E5",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],

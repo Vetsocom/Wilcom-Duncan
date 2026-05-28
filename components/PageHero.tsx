@@ -22,7 +22,7 @@ export function PageHero({ heading, subheading, intro, image, imageAlt, classNam
         <div className={cn("grid items-center gap-10", image ? "lg:grid-cols-[1fr_0.75fr]" : "text-center")}>
           <MotionWrapper className={cn(!image && "mx-auto max-w-4xl")}>
             {subheading && (
-              <span className="mb-6 block text-sm font-semibold uppercase tracking-[0.22em] text-gold md:text-base">
+              <span className="mb-6 block text-sm font-semibold uppercase tracking-[0.22em] text-white/65 md:text-base">
                 {subheading}
               </span>
             )}

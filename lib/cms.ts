@@ -8,7 +8,6 @@ import { Profile } from '@/models/Profile';
 import { Project } from '@/models/Project';
 import { Settings } from '@/models/Settings';
 
-// Helper to get the absolute path to the content directory
 const getContentPath = (filename: string) => path.join(process.cwd(), 'content', filename);
 
 async function readJson(filename: string) {
