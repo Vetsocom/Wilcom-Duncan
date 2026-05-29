@@ -108,8 +108,8 @@ export default async function Home() {
       </section>
 
       {/* Expertise Grid */}
-      <section className="py-24 bg-charcoal border-y border-slate/10 relative">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[100px] pointer-events-none" />
+      <section className="py-24 bg-charcoal border-y border-white/10 relative">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/[0.04] rounded-full blur-[100px] pointer-events-none" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader 
             heading="Areas of Expertise"
@@ -148,7 +148,7 @@ export default async function Home() {
       {/* CEOs Bootcamp Feature */}
       <section className="py-24 bg-charcoal relative overflow-hidden border-y border-white/10">
         <div className="absolute inset-0 bg-grid-white opacity-10" />
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-1/2 h-[600px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-1/2 h-[600px] bg-white/[0.06] rounded-full blur-[100px] pointer-events-none" />
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -172,8 +172,8 @@ export default async function Home() {
             </div>
             
             <div className="relative">
-              <div className="aspect-square md:aspect-4/3 rounded-2xl overflow-hidden bg-linear-to-br from-midnight to-slate/20 border border-slate/10 flex items-center justify-center relative z-10">
-                <div className="absolute inset-0 bg-gold/5 mix-blend-overlay" />
+              <div className="aspect-square md:aspect-4/3 rounded-2xl overflow-hidden bg-gradient-to-br from-midnight to-white/10 border border-white/10 flex items-center justify-center relative z-10">
+                <div className="absolute inset-0 bg-white/[0.03] mix-blend-overlay" />
                 <SafeImage
                   src={featuredBootcampImage}
                   alt="CEOs Bootcamp"
