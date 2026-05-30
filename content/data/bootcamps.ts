@@ -40,7 +40,7 @@ export const bootcamps: Bootcamp[] = [
       "SME growth"
     ],
     speakers: ["Wilcom Duncan"],
-    images: ["/images/bootcamp/bootcamp-may-2024.jpg", "/images/bootcamp/bootcamp-2024.jpg", "/images/bootcamp/ceos-bootcamp-audience.jpg"],
+    images: ["/images/gallery1.jpg", "/images/gallery2.jpg", "/images/gallery3.jpg", "/images/gallery4.jpg", "/images/gallery5.jpg", "/images/gallery6.jpg", "/images/gallery7.jpg", "/images/gallery8.jpg", "/images/gallery9.jpg", "/images/speaker1.0.jpg"],
     videos: [],
     testimonials: [
       "The bootcamp helped me rethink my business model and leadership approach.",
@@ -90,7 +90,7 @@ export const bootcamps: Bootcamp[] = [
       "Strategy and execution",
       "Entrepreneurship discipline"
     ],
-    speakers: ["Wilcom Duncan"],
+    speakers: ["Mamudu Saah Darbo",""],
     images: ["/images/bootcamp/ceos-bootcamp-audience.jpg", "/images/bootcamp/ceos-bootcamp-community-collage.jpg", "/images/bootcamp/global-entrepreneur-week-session.jpg"],
     videos: [],
     testimonials: [
