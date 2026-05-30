@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Bootcamp } from "@/data/bootcamps";
 import { MotionWrapper } from "./MotionWrapper";
 import { ImageCard } from "./ImageCard";
-import { ArrowRight, MapPin, Calendar } from "lucide-react";
+import { SafeImage } from "./SafeImage";
+import { ArrowRight, MapPin, Calendar, UserRound } from "lucide-react";
 
 interface BootcampCardProps {
   bootcamp: Bootcamp;
@@ -12,6 +13,9 @@ interface BootcampCardProps {
 export function BootcampCard({ bootcamp, index }: BootcampCardProps) {
   const isUpcomingBootcamp4 = bootcamp.slug === "ceos-bootcamp-4" && bootcamp.status === "upcoming";
   const cardImage = isUpcomingBootcamp4 ? bootcamp.images?.[2] || bootcamp.images?.[0] : bootcamp.images?.[0];
+  const speakers = (bootcamp.speakers || []).filter((speaker) => speaker?.name);
+  const visibleSpeakers = speakers.slice(0, 3);
+  const remainingSpeakers = speakers.length - visibleSpeakers.length;
 
   return (
     <MotionWrapper delay={index * 0.1} className="group premium-card relative overflow-hidden">
@@ -56,6 +60,44 @@ export function BootcampCard({ bootcamp, index }: BootcampCardProps) {
                 </div>
               )}
             </div>
+
+            {visibleSpeakers.length > 0 ? (
+              <div className="mb-6 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">
+                  Speaker Section
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {visibleSpeakers.map((speaker, speakerIndex) => (
+                    <div key={`${speaker.name}-${speakerIndex}`} className="flex min-w-0 items-center gap-3 rounded-full border border-white/10 bg-midnight/70 py-2 pl-2 pr-4">
+                      <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-gold/30 bg-white/[0.05]">
+                        {speaker.image ? (
+                          <SafeImage
+                            src={speaker.image}
+                            alt={speaker.name}
+                            fill
+                            sizes="36px"
+                            className="object-cover object-top"
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center">
+                            <UserRound size={17} className="text-slate" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-semibold text-ivory">{speaker.name}</p>
+                        {speaker.title ? <p className="truncate text-xs text-slate-300">{speaker.title}</p> : null}
+                      </div>
+                    </div>
+                  ))}
+                  {remainingSpeakers > 0 ? (
+                    <div className="flex h-[54px] items-center rounded-full border border-white/10 bg-midnight/70 px-4 text-sm font-semibold text-slate-300">
+                      +{remainingSpeakers} more
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
           </div>
           
           <Link href={`/ceos-bootcamp/${bootcamp.slug}`} className="inline-flex w-fit items-center gap-2 rounded-full border border-gold/40 px-4 py-2 text-sm font-semibold text-gold transition hover:border-gold hover:bg-gold/10">

@@ -54,6 +54,33 @@ function imageArray(value: any): string[] {
   return resolved ? [resolved] : [];
 }
 
+type CmsSpeaker = { name: string; title?: string; image?: string; bio?: string };
+
+function normalizeSpeakers(value: any): CmsSpeaker[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((speaker): CmsSpeaker | null => {
+      if (typeof speaker === 'string') {
+        const name = speaker.trim();
+        return name ? { name } : null;
+      }
+
+      if (!speaker || typeof speaker !== 'object') return null;
+
+      const name = String(speaker.name || '').trim();
+      if (!name) return null;
+
+      return {
+        name,
+        title: typeof speaker.title === 'string' ? speaker.title.trim() : '',
+        image: imageUrl(speaker.image || speaker.photo || speaker.imageUrl),
+        bio: typeof speaker.bio === 'string' ? speaker.bio.trim() : '',
+      };
+    })
+    .filter((speaker): speaker is CmsSpeaker => Boolean(speaker));
+}
+
 const ceosBootcamp4Images = [
   '/images/bootcamp/upcoming/ceos-bootcamp-4-side-profile.jpg',
   '/images/bootcamp/upcoming/ceos-bootcamp-4-side-profile-alt.jpg',
@@ -126,7 +153,7 @@ function normalizeBootcamp(bootcamp: any) {
     videos: Array.isArray(bootcamp.videos) ? bootcamp.videos : [],
     objectives: Array.isArray(bootcamp.objectives) ? bootcamp.objectives : [],
     topics: Array.isArray(bootcamp.topics) ? bootcamp.topics : [],
-    speakers: Array.isArray(bootcamp.speakers) ? bootcamp.speakers : [],
+    speakers: normalizeSpeakers(bootcamp.speakers),
     testimonials: Array.isArray(bootcamp.testimonials) ? bootcamp.testimonials : [],
     published: bootcamp.published !== false,
   };

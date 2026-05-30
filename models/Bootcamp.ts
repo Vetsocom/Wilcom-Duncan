@@ -1,5 +1,15 @@
 import { Schema, models, model, type InferSchemaType } from "mongoose";
 
+const SpeakerSchema = new Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    title: { type: String, default: "", trim: true },
+    image: { type: String, default: "", trim: true },
+    bio: { type: String, default: "" },
+  },
+  { _id: false }
+);
+
 const BootcampSchema = new Schema(
   {
     id: { type: String, required: true, unique: true, trim: true },
@@ -12,7 +22,7 @@ const BootcampSchema = new Schema(
     overview: { type: String, default: "" },
     objectives: { type: [String], default: [] },
     topics: { type: [String], default: [] },
-    speakers: { type: [String], default: [] },
+    speakers: { type: [SpeakerSchema], default: [] },
     images: { type: [String], default: [] },
     videos: { type: [String], default: [] },
     testimonials: { type: [String], default: [] },

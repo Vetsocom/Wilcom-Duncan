@@ -18,7 +18,20 @@
       "Executive leadership",
       "SME growth"
     ],
-    "speakers": ["Wilcom Duncan"],
+    "speakers": [
+      {
+        "name": "Wilcom Duncan",
+        "title": "Host & Lead Facilitator",
+        "image": "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg",
+        "bio": "Wilcom Duncan guided the first CEOs Bootcamp as a practical leadership and business growth room for founders, entrepreneurs, and emerging executives."
+      },
+      {
+        "name": "Janice Love Bropleh",
+        "title": "Guest Speaker",
+        "image": "/images/speaker1.0.jpg",
+        "bio": "Janice Love Bropleh brought a social impact and enterprise perspective to the session, encouraging participants to connect leadership discipline with community value."
+      }
+    ],
     "images": ["/images/bootcamp/ceos-bootcamp-hero-speaker.jpg", "/images/bootcamp/ceos-bootcamp-community-collage.jpg", "/images/bootcamp/ceos-bootcamp-audience.jpg"],
     "videos": [],
     "testimonials": [
@@ -44,7 +57,14 @@
       "Branding and visibility",
       "Corporate communication"
     ],
-    "speakers": ["Wilcom Duncan"],
+    "speakers": [
+      {
+        "name": "Wilcom Duncan",
+        "title": "Business Strategist & Executive Coach",
+        "image": "/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg",
+        "bio": "Wilcom Duncan led this value-creation session, helping entrepreneurs understand how companies create, deliver, and capture value in competitive markets."
+      }
+    ],
     "images": ["/images/bootcamp/strategic-foresight-2024-flyer.jpg", "/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg", "/images/bootcamp/global-entrepreneur-week-session.jpg"],
     "videos": [],
     "testimonials": [
@@ -69,7 +89,20 @@
       "Strategy and execution",
       "Entrepreneurship discipline"
     ],
-    "speakers": ["Wilcom Duncan"],
+    "speakers": [
+      {
+        "name": "Wilcom Duncan",
+        "title": "Host & Lead Facilitator",
+        "image": "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg",
+        "bio": "Wilcom Duncan returned as lead facilitator, guiding entrepreneurs and business operators through building with clarity, mission, and disciplined execution."
+      },
+      {
+        "name": "Mamudu Saah Darbo",
+        "title": "Guest Speaker",
+        "image": "/images/bootcamp/global-entrepreneur-week-session.jpg",
+        "bio": "Mamudu Saah Darbo contributed guest insights on entrepreneurship, leadership strategy, and the discipline required to run stronger organizations."
+      }
+    ],
     "images": ["/images/bootcamp/ceos-bootcamp-audience.jpg", "/images/bootcamp/ceos-bootcamp-community-collage.jpg", "/images/bootcamp/global-entrepreneur-week-session.jpg"],
     "videos": [],
     "testimonials": [
@@ -104,7 +137,14 @@
       "Strategy and execution",
       "Entrepreneurship discipline"
     ],
-    "speakers": ["Wilcom Duncan"],
+    "speakers": [
+      {
+        "name": "Wilcom Duncan",
+        "title": "Business Strategist & Executive Coach",
+        "image": "/images/bootcamp/bootcamp-featured-portrait.jpg",
+        "bio": "Wilcom Duncan will lead CEOs Bootcamp 4.0, an executive education experience designed for founders, C-suite leaders, and decision-makers ready to sharpen their business discipline."
+      }
+    ],
     "images": [
       "/images/bootcamp/upcoming/ceos-bootcamp-4-side-profile.jpg",
       "/images/bootcamp/upcoming/ceos-bootcamp-4-side-profile-alt.jpg",
@@ -135,7 +175,14 @@
       "Business planning",
       "Market positioning"
     ],
-    "speakers": ["Wilcom Duncan"],
+    "speakers": [
+      {
+        "name": "Wilcom Duncan",
+        "title": "Strategy Facilitator",
+        "image": "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg",
+        "bio": "Wilcom Duncan led the Strategic Foresight session, helping business leaders plan, position, and execute for growth opportunities in the year ahead."
+      }
+    ],
     "images": ["/images/bootcamp/strategic-foresight-2024-flyer.jpg", "/images/bootcamp/global-entrepreneur-week-session.jpg", "/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg"],
     "videos": [],
     "testimonials": [],
