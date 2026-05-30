@@ -10,7 +10,7 @@ export const profile = {
     "Media Executive",
     "CEO of Reecom Media",
   ],
-  bio: "Wilcom Duncan is a Liberian entrepreneur, SME Development Consultant, business trainer, speaker, and media executive working at the intersection of business development, executive education, corporate branding, and media strategy. Through platforms connected to Reecom Media, CEOs Chat, and CEOs Bootcamp, he helps entrepreneurs, founders, SMEs, and corporate teams think strategically, communicate clearly, and build businesses with structure, discipline, and long-term value.",
+  bio: "Wilcom Duncan is a Liberian-based entrepreneur, corporate trainer, and media executive dedicated to advancing SME development and executive education. By leveraging platforms such as Reecom Media, CEOs Chat, and CEOs Bootcamp, he guides businesses and leadership teams in refining their strategic thinking, streamlining corporate communication, and building scalable enterprises rooted in structure and value.",
   location: "Monrovia, Liberia",
   socialLinks: {
     facebook: "https://web.facebook.com/wilcom.duncan/?_rdc=1&_rdr#",
