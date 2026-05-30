@@ -4,6 +4,7 @@ import { constructMetadata } from "@/lib/seo";
 import { SectionHeader } from "@/components/SectionHeader";
 import { CTASection } from "@/components/CTASection";
 import { GalleryGrid } from "@/components/GalleryGrid";
+import { SpeakersGallery } from "@/components/SpeakersGallery";
 import { getBootcamps } from "@/lib/cms";
 import type { Bootcamp } from "@/data/bootcamps";
 import { SafeImage } from "@/components/SafeImage";
@@ -162,6 +163,8 @@ export default async function BootcampDetailPage({ params }: PageProps) {
           </div>
         </section>
       ) : null}
+
+      <SpeakersGallery speakers={bootcamp.speakers} bootcampTitle={bootcamp.title} />
 
       <section className="py-24 bg-charcoal border-y border-slate/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">

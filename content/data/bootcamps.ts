@@ -1,3 +1,10 @@
+export type Speaker = {
+  name: string;
+  title?: string;
+  image?: string;
+  bio?: string;
+};
+
 export type Bootcamp = {
   id: string;
   slug: string;
@@ -9,7 +16,7 @@ export type Bootcamp = {
   overview: string;
   objectives: string[];
   topics: string[];
-  speakers: string[];
+  speakers: Speaker[];
   images: string[];
   videos: string[];
   testimonials: string[];
@@ -39,7 +46,14 @@ export const bootcamps: Bootcamp[] = [
       "Executive leadership",
       "SME growth"
     ],
-    speakers: ["Wilcom Duncan"],
+    speakers: [
+      {
+        name: "Wilcom Duncan",
+        title: "Business Strategist & Executive Coach",
+        image: "/images/speaker1.0.jpg",
+        bio: "Wilcom Duncan is a business strategist, executive coach, and founder of the CEOs Bootcamp series. He has guided hundreds of entrepreneurs and executives across Liberia and West Africa."
+      }
+    ],
     images: ["/images/gallery1.jpg", "/images/gallery2.jpg", "/images/gallery3.jpg", "/images/gallery4.jpg", "/images/gallery5.jpg", "/images/gallery6.jpg", "/images/gallery7.jpg", "/images/gallery8.jpg", "/images/gallery9.jpg", "/images/speaker1.0.jpg"],
     videos: [],
     testimonials: [
@@ -65,7 +79,14 @@ export const bootcamps: Bootcamp[] = [
       "Branding and visibility",
       "Corporate communication"
     ],
-    speakers: ["Wilcom Duncan"],
+    speakers: [
+      {
+        name: "Wilcom Duncan",
+        title: "Business Strategist & Executive Coach",
+        image: "/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg",
+        bio: "Wilcom Duncan led this intensive value-creation session, helping entrepreneurs understand how companies create, deliver, and capture value in competitive markets."
+      }
+    ],
     images: ["/images/bootcamp/bootcamp-2024.jpg", "/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg", "/images/bootcamp/global-entrepreneur-week-session.jpg"],
     videos: [],
     testimonials: [
@@ -90,7 +111,20 @@ export const bootcamps: Bootcamp[] = [
       "Strategy and execution",
       "Entrepreneurship discipline"
     ],
-    speakers: ["Mamudu Saah Darbo",""],
+    speakers: [
+      {
+        name: "Wilcom Duncan",
+        title: "Business Strategist & Executive Coach",
+        image: "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg",
+        bio: "Wilcom Duncan returned as lead facilitator, guiding entrepreneurs and business operators through building with clarity, mission, and disciplined execution."
+      },
+      {
+        name: "Mamudu Saah Darbo",
+        title: "Guest Speaker",
+        image: "/images/bootcamp/global-entrepreneur-week-session.jpg",
+        bio: "A distinguished guest speaker who contributed expert insights on entrepreneurship and leadership strategy at CEOs Bootcamp 2.0."
+      }
+    ],
     images: ["/images/bootcamp/ceos-bootcamp-audience.jpg", "/images/bootcamp/ceos-bootcamp-community-collage.jpg", "/images/bootcamp/global-entrepreneur-week-session.jpg"],
     videos: [],
     testimonials: [
@@ -125,7 +159,14 @@ export const bootcamps: Bootcamp[] = [
       "Strategy and execution",
       "Entrepreneurship discipline"
     ],
-    speakers: ["Wilcom Duncan"],
+    speakers: [
+      {
+        name: "Wilcom Duncan",
+        title: "Business Strategist & Executive Coach",
+        image: "/images/bootcamp/bootcamp-featured-portrait.jpg",
+        bio: "Wilcom Duncan will lead CEOs Bootcamp 4.0, an executive education experience designed for founders, C-suite leaders, and decision-makers ready to sharpen their business discipline."
+      }
+    ],
     images: [
       "/images/bootcamp/upcoming/ceos-bootcamp-4-side-profile.jpg",
       "/images/bootcamp/upcoming/ceos-bootcamp-4-side-profile-alt.jpg",
@@ -156,7 +197,14 @@ export const bootcamps: Bootcamp[] = [
       "Business planning",
       "Market positioning"
     ],
-    speakers: ["Wilcom Duncan"],
+    speakers: [
+      {
+        name: "Wilcom Duncan",
+        title: "Business Strategist & Executive Coach",
+        image: "/images/bootcamp/ceos-bootcamp-hero-speaker.jpg",
+        bio: "Wilcom Duncan led the Strategic Foresight session, helping business leaders plan, position, and execute for growth opportunities in the year ahead."
+      }
+    ],
     images: ["/images/bootcamp/strategic-foresight-2024-flyer.jpg", "/images/bootcamp/global-entrepreneur-week-session.jpg", "/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg"],
     videos: [],
     testimonials: [],
