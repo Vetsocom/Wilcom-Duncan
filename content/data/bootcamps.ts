@@ -48,13 +48,26 @@ export const bootcamps: Bootcamp[] = [
     ],
     speakers: [
       {
-        name: "Wilcom Duncan",
-        title: "Business Strategist & Executive Coach",
+        name: "Janice Love Bropleh",
+        title: "Executive Director of The Green Girls Project",
         image: "/images/speaker1.0.jpg",
-        bio: "Wilcom Duncan is a business strategist, executive coach, and founder of the CEOs Bootcamp series. He has guided hundreds of entrepreneurs and executives across Liberia and West Africa."
-      }
+        bio: "Janice Love Bropleh is the Executive Director of The Green Girls Project, a Liberian organization working to empower women and girls through education, entrepreneurship, and environmental sustainability. She is a passionate advocate for social justice and sustainable development, and she has inspired countless young people to pursue their dreams and make a difference in their communities. Ms. Bropleh is a graduate of Cuttington University and she has received numerous awards for her work in advocacy and community development."
+      },
+        {
+        name: "Janice Love Bropleh",
+        title: "Executive Director of The Green Girls Project",
+        image: "/images/speaker1.0.jpg",
+        bio: "Janice Love Bropleh is the Executive Director of The Green Girls Project, a Liberian organization working to empower women and girls through education, entrepreneurship, and environmental sustainability. She is a passionate advocate for social justice and sustainable development, and she has inspired countless young people to pursue their dreams and make a difference in their communities. Ms. Bropleh is a graduate of Cuttington University and she has received numerous awards for her work in advocacy and community development."
+      },
+        {
+        name: "Janice Love Bropleh",
+        title: "Executive Director of The Green Girls Project",
+        image: "/images/speaker1.0.jpg",
+        bio: "Janice Love Bropleh is the Executive Director of The Green Girls Project, a Liberian organization working to empower women and girls through education, entrepreneurship, and environmental sustainability. She is a passionate advocate for social justice and sustainable development, and she has inspired countless young people to pursue their dreams and make a difference in their communities. Ms. Bropleh is a graduate of Cuttington University and she has received numerous awards for her work in advocacy and community development."
+      },
+      
     ],
-    images: ["/images/gallery1.jpg", "/images/gallery2.jpg", "/images/gallery3.jpg", "/images/gallery4.jpg", "/images/gallery5.jpg", "/images/gallery6.jpg", "/images/gallery7.jpg", "/images/gallery8.jpg", "/images/gallery9.jpg", "/images/speaker1.0.jpg"],
+    images: ["/images/gallery1.jpg", "/images/gallery2.jpg", "/images/gallery3.jpg", "/images/gallery4.jpg", "/images/gallery5.jpg", "/images/gallery6.jpg", "/images/gallery7.jpg", "/images/gallery8.jpg", "/images/gallery9.jpg", "/images/speaker1.0.jpg","/images/speaker1.0-2.jpg","/images/speaker1.0-3.jpg","/images/speaker1.0-4.jpg","/images/speaker1.0-5.jpg","/images/speaker1.0-6.jpg","/images/speaker1.0-7.jpg","/images/speaker1.0-8.jpg","/images/speaker1.0-9.jpg","/images/speaker1.0-10.jpg"],
     videos: [],
     testimonials: [
       "The bootcamp helped me rethink my business model and leadership approach.",
