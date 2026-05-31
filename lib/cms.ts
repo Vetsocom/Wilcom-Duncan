@@ -27,10 +27,22 @@ async function withDatabase<T>(operation: () => Promise<T>) {
   return operation();
 }
 
-function serializeDocument(document: any) {
-  if (!document) return document;
-  const { _id, __v, createdAt, updatedAt, ...rest } = document;
-  return rest;
+function serializeDocument(document: any): any {
+  if (!document || typeof document !== 'object') return document;
+
+  if (Array.isArray(document)) {
+    return document.map(serializeDocument);
+  }
+
+  // Handle Mongoose documents if they have .toObject()
+  const data = typeof document.toObject === 'function' ? document.toObject() : document;
+  const { _id, __v, createdAt, updatedAt, ...rest } = data;
+
+  const cleaned: any = {};
+  for (const [key, value] of Object.entries(rest)) {
+    cleaned[key] = serializeDocument(value);
+  }
+  return cleaned;
 }
 
 function imageUrl(value: any): string {
@@ -69,9 +81,10 @@ function defaultSpeakerImage(name: string) {
 }
 
 function normalizeSpeakers(value: any): CmsSpeaker[] {
-  if (!Array.isArray(value)) return [];
+  // Handle case where CMS might send a single object or an array
+  const items = Array.isArray(value) ? value : value ? [value] : [];
 
-  return value
+  return items
     .map((speaker): CmsSpeaker | null => {
       if (typeof speaker === 'string') {
         const name = speaker.trim();
@@ -80,13 +93,14 @@ function normalizeSpeakers(value: any): CmsSpeaker[] {
 
       if (!speaker || typeof speaker !== 'object') return null;
 
-      const name = String(speaker.name || '').trim();
+      // Support multiple name field variations from different CMS setups
+      const name = String(speaker.name || speaker.fullName || speaker.label || '').trim();
       if (!name) return null;
 
       return {
         name,
         title: typeof speaker.title === 'string' ? speaker.title.trim() : '',
-        image: imageUrl(speaker.image || speaker.photo || speaker.imageUrl) || defaultSpeakerImage(name),
+        image: imageUrl(speaker.image || speaker.photo || speaker.imageUrl || speaker.picture) || defaultSpeakerImage(name),
         bio: typeof speaker.bio === 'string' ? speaker.bio.trim() : '',
       };
     })
@@ -161,7 +175,7 @@ function normalizeBootcamp(bootcamp: any) {
     registrationOpen: isBootcamp4 ? true : Boolean(bootcamp.registrationOpen),
     images: isBootcamp4
       ? ceosBootcamp4Images
-      : imageArray(bootcamp.images || bootcamp.gallery || bootcamp.heroImage || bootcamp.image),
+      : imageArray(bootcamp.images || bootcamp.gallery || bootcamp.heroImage || bootcamp.image || bootcamp.featuredImage),
     videos: Array.isArray(bootcamp.videos) ? bootcamp.videos : [],
     objectives: Array.isArray(bootcamp.objectives) ? bootcamp.objectives : [],
     topics: Array.isArray(bootcamp.topics) ? bootcamp.topics : [],
