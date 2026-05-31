@@ -56,6 +56,18 @@ function imageArray(value: any): string[] {
 
 type CmsSpeaker = { name: string; title?: string; image?: string; bio?: string };
 
+function defaultSpeakerImage(name: string) {
+  const normalized = name.toLowerCase();
+  if (normalized.includes('janice')) return '/images/speaker1.0.jpg';
+  if (normalized.includes('mamudu') || normalized.includes('darbo')) {
+    return '/images/bootcamp/global-entrepreneur-week-session.jpg';
+  }
+  if (normalized.includes('wilcom') || normalized.includes('duncan')) {
+    return '/images/bootcamp/ceos-bootcamp-hero-speaker.jpg';
+  }
+  return '/images/bootcamp/ceos-bootcamp-speaker-spotlight.jpg';
+}
+
 function normalizeSpeakers(value: any): CmsSpeaker[] {
   if (!Array.isArray(value)) return [];
 
@@ -63,7 +75,7 @@ function normalizeSpeakers(value: any): CmsSpeaker[] {
     .map((speaker): CmsSpeaker | null => {
       if (typeof speaker === 'string') {
         const name = speaker.trim();
-        return name ? { name } : null;
+        return name ? { name, image: defaultSpeakerImage(name) } : null;
       }
 
       if (!speaker || typeof speaker !== 'object') return null;
@@ -74,7 +86,7 @@ function normalizeSpeakers(value: any): CmsSpeaker[] {
       return {
         name,
         title: typeof speaker.title === 'string' ? speaker.title.trim() : '',
-        image: imageUrl(speaker.image || speaker.photo || speaker.imageUrl),
+        image: imageUrl(speaker.image || speaker.photo || speaker.imageUrl) || defaultSpeakerImage(name),
         bio: typeof speaker.bio === 'string' ? speaker.bio.trim() : '',
       };
     })

@@ -25,7 +25,7 @@ export function BootcampCard({ bootcamp, index }: BootcampCardProps) {
              src={cardImage}
              alt={bootcamp.title}
              className=" rounded-none border-0 shadow-none md:h-full md:min-h-68"
-             sizes="(min-width: 768px) 40vw, 100vw"
+             sizes="(min-width: 768px) 40vw"
            />
            <div className="absolute left-4 top-4 z-20">
              <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${bootcamp.status === 'upcoming' ? 'bg-emerald-400 text-midnight' : 'bg-midnight/80 text-ivory border border-slate/20 backdrop-blur-sm'}`}>
@@ -62,7 +62,7 @@ export function BootcampCard({ bootcamp, index }: BootcampCardProps) {
             </div>
 
             {visibleSpeakers.length > 0 ? (
-              <div className="mb-6 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <div className="mb-6 rounded-2xl border border-white/10 bg-white/3 p-4">
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">
                   Speaker Section
                 </p>
